@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>AOP</title>
+<link rel="stylesheet" type="text/css" href="./CSS/home.css">
+<style></style>
+</head>
+<body>
+    <H1>AOP</H1>
+    <div id="container"></div>
+    <input onclick="voice()" type="button" id="bn" value="I will cry">
+    <div id="footer">
+        <h3> Document Information </h3>
+        <ul>
+            <li>
+                Date: 2015/02/03
+            </li>
+            <li>
+                Reference: 
+                <ul>
+                    <li><a target="_blank" href="http://www.cnblogs.com/rubylouvre/archive/2009/08/08/1541578.html">javascript AOP implementation</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>
+<script src="./LIB/jquery/jquery-2.1.3.js"></script>
+<script src="./LIB/google-code-prettify/src/run_prettify.js"></script>
+<script type="text/javascript">
+    /*  Create a new function Aspects.
+        it can works to add more feature before/ after/ around
+     */
+    Aspects = function(){};
+    Aspects.prototype={
+    before:function(target,method,advice){
+               var original  = target[method];
+               target[method] = function(){
+                   (advice)();
+                   original.apply(target, arguments);
+               }
+               return target
+           },
+    after:function(target,method,advice,arg){
+              var original  = target[method];
+              target[method] = function(){
+                  original.apply(target, arguments);
+                  (advice)(arg);
+              }
+              return target
+          },
+    around:function(target,method,advice){
+               var original  = target[method];
+               target[method] = function(){
+                   (advice)();
+                   original.apply(target, arguments);
+                   (advice)();
+               }
+               return target
+           }
+    }
+
+    /* Directly add for function prototype */
+    Function.prototype.after = function(func){
+        var that = this;
+        return function(){
+            var returnValue = that.apply(this, arguments);
+            if(returnValue){
+                return returnValue;
+            }
+            return func.apply(this, arguments);
+        }
+    }
+
+    /* Mock data and function */
+    function voice(){
+        console.log("I need help...");
+    } 
+
+
+    /*  Execute first case
+     */
+    var msg = "HELP! HELP!!!! -- by AOP"
+    var bn = document.getElementById("bn");
+    var a = new Aspects;
+    
+    var testMsg = "I'm a message";
+    var obj = {
+        output : function(m){
+            console.log(m);
+        }
+    }
+
+    a.after(obj, "output", function(m){console.log(m)}, ", Not a good one -- by AOP~");
+    obj.output(testMsg);
+
+
+    /*  Execute first case
+        inject in click event
+        please click the button to test.
+     */    
+    a.after(bn,"onclick",function(){console.log(msg)});
+
+
+    /* Execute second case */
+    var plugin = function(){ 
+        console.log("msg1"); 
+        return false;
+    }
+    var plugin2 = function(){ 
+        console.log("msg2 -- by AOP");
+        return false;
+    }
+    var plugin3 = function(){ 
+        console.log("msg3 -- by AOP"); 
+        return false;
+    }
+
+    var updatedByAOP = plugin.after(plugin2).after(plugin3);
+
+    updatedByAOP();          
+</script>
+<script src="./LIB/home.js"></script>
+    
+
