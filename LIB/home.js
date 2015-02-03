@@ -2,7 +2,17 @@
     var my = {};
 
     var regex = {
-        comments : /\/\*.*?\*\//g 
+        /*
+         * Please ref: 
+         * http://stackoverflow.com/questions/1979884/how-to-use-javascript-regex-over-multiple-lines
+         * http://jsperf.com/javascript-multiline-regexp-workarounds
+         *
+         * comments : /\/\*.*?\*\//g 
+         * comments : /\/\*[\s\S]*?\*\//g 
+         *
+         * E.g. \/* abc  *\/
+         */
+        comments : /\/\*[^]*?\*\//g  
     };
 
     //var scripts = document.getElementsByTagName("script");
@@ -36,7 +46,7 @@
             var title = titles[i];
             var code = codes[i];
             
-            var html = "<strong>{0}</strong><pre class = 'prettyprint lang-js'>{1}</pre>";
+            var html = "<pre><strong>{0}</strong></pre><pre class = 'codePanel prettyprint lang-js'><code>{1}</code></pre>";
             html = html.replace("{0}", title);
             html = html.replace("{1}", code);
                  
