@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Css layout debuger</title>
+<link rel="stylesheet" type="text/css" href="./CSS/home.css">
+<style></style>
+</head>
+<body>
+    <H1>Css layout debuger</H1>
+    <div id="container"></div>
+    <div id="footer">
+        <h3> Document Information </h3>
+        <ul>
+            <li>
+                Date: 2015/02/03
+            </li>
+            <li>
+                Reference: 
+                <ul>
+                    <li><a target="_blank" href="https://gist.github.com/addyosmani/fd3999ea7fce242756b1">CSS layout debugger</a></li>
+                    <li><a target="_blank" href="http://ourjs.com/detail/54be0a98232227083e000012">learn from css debuger</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>
+<script src="./LIB/jquery/jquery-2.1.3.js"></script>
+<script src="./LIB/google-code-prettify/src/run_prettify.js"></script>
+<script src="./LIB/home.js"></script>
+<script type="text/javascript">
+    /*  Css layout debugger
+        A tweet-sized debugger for visualizing your CSS layouts. 
+        Outlines every DOM element on your page a random (valid) CSS hex color. */
+
+    $(window).load(function(){
+        [].forEach.call(
+            //Query all the elements
+            document.querySelectorAll("*"), 
+            function(a){
+                //Pick a valid random css hex color and convert to a base 16 number for outline
+                a.style.outline="1px solid #"+ (~~(Math.random()*(1<<24))) .toString(16); 
+        });
+    });
+
+    
+    /* We can use toString to convert decimal to hexadecimal */
+    (function(){
+        var a = 12.34,
+            b = -1231.24122,
+            c = 2323.000001;
+
+        console.log(~~a);
+        console.log(~~b);
+        console.log(~~c);
+
+        console.log(~~a == parseInt(a, 10));
+        console.log(~~b == parseInt(b, 10));
+        console.log(~~c == parseInt(c, 10));
+
+        console.log(~~a == 0|a == parseInt(a, 10));
+        console.log(~~b == 0|b == parseInt(b, 10));
+        console.log(~~c == 0|c == parseInt(c, 10));
+    }());
+</script>
+    
+

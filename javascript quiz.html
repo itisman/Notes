@@ -18,6 +18,8 @@
                 Reference: 
                 <ul>
                     <li><a target="_blank" href="http://perfectionkills.com/javascript-quiz/">Javascript Quiz</a></li>
+                    <li><a target="_blank" href="http://javascript-puzzlers.herokuapp.com/?utm_source=ourjs.com">Javascript Puzzlers</a></li>
+                    <li><a target="_blank" href="http://ourjs.com/detail/52fb82e13bd19c4814000001">Javascript Puzzlers (cn)</a></li>
                 </ul>
             </li>
         </ul>
@@ -175,6 +177,454 @@
     (function(){
         try{
             with (function(x, undefined){}) length; 
+        }catch(e){
+            console.error(e.message);        
+        }
+    })();
+
+
+    /* Puzzler1 */
+    (function(){
+        try{
+            var a = ["1", "2", "3"].map(parseInt);
+        }catch(e){
+            console.error(e.message);        
+        }
+    })();
+
+    /* Puzzler2 */
+    (function(){
+        try{
+            var a = [typeof null, null instanceof Object];
+        }catch(e){
+            console.error(e.message);        
+        }
+    })();
+
+    /* Puzzler3 */
+    (function(){
+        try{
+            var a = [ [3,2,1].reduce(Math.pow), [].reduce(Math.pow) ];
+        }catch(e){
+            console.error(e.message);        
+        }
+    })();
+
+    /* Puzzler4 */
+    (function(){
+        try{
+            var val = 'smtg';
+            console.log('Value is ' + (val === 'smtg') ? 'Something' : 'Nothing');
+        }catch(e){
+            console.error(e.message);        
+        }
+    })();
+
+    /* Puzzler5 */
+    (function(){
+        try{
+            var name = 'World!';
+            (function () {
+                if (typeof name === 'undefined') {
+                    var name = 'Jack';
+                    console.log('Goodbye ' + name);
+                } else {
+                    console.log('Hello ' + name);
+                }
+            })();
+        }catch(e){
+            console.error(e.message);        
+        }
+    })();
+
+    /* Puzzler6 */
+    (function(){
+        try{
+            var END = Math.pow(2, 53);
+            var START = END - 100;
+            var count = 0;
+            for (var i = START; i <= END; i++) {
+              count++;
+            }
+            console.log(count);
+        }catch(e){
+            console.error(e.message);        
+        }
+    })();
+
+    /* Puzzler7 */
+    (function(){
+        try{
+            var ary = [0,1,2];
+            ary[10] = 10;
+            ary.filter(function(x) { return x === undefined;});
+        }catch(e){
+            console.error(e.message);        
+        }
+    })();
+
+    /* Puzzler8 */
+    (function(){
+        try{
+            var two   = 0.2
+            var one   = 0.1
+            var eight = 0.8
+            var six   = 0.6
+            var a = [two - one == one, eight - six == two]
+        }catch(e){
+            console.error(e.message);        
+        }
+    })();
+
+    /* Puzzler9 */
+    (function(){
+        try{
+            function showCase(value) {
+                switch(value) {
+                    case 'A':
+                        console.log('Case A');
+                        break;
+                    case 'B':
+                        console.log('Case B');
+                        break;
+                    case undefined:
+                        console.log('undefined');
+                        break;
+                    default:
+                        console.log('Do not know!');
+                }
+            }
+            console.log(showCase(new String('A')));
+        }catch(e){
+            console.error(e.message);        
+        }
+    })();
+
+    /* Puzzler10 */
+    (function(){
+        try{
+            function showCase(value) {
+                switch(value) {
+                    case 'A':
+                        console.log('Case A');
+                        break;
+                    case 'B':
+                        console.log('Case B');
+                        break;
+                    case undefined:
+                        console.log('undefined');
+                        break;
+                    default:
+                        console.log('Do not know!');
+                }
+            }
+            console.log(showCase(String('A')));
+        }catch(e){
+            console.error(e.message);        
+        }
+    })();
+
+    /* Puzzler11 */
+    (function(){
+        try{
+            function isOdd(num) {
+                return num % 2 == 1;
+            }
+            function isEven(num) {
+                return num % 2 == 0;
+            }
+            function isSane(num) {
+                return isEven(num) || isOdd(num);
+            }
+            var values = [7, 4, '13', -9, Infinity];
+            console.log(values.map(isSane)); 
+        }catch(e){
+            console.error(e.message);        
+        }
+    })();
+
+    /* Puzzler12 */
+    (function(){
+        try{
+            console.log(parseInt(3, 8));
+            console.log(parseInt(3, 2));
+            console.log(parseInt(3, 0));
+        }catch(e){
+            console.error(e.message);        
+        }
+    })();
+
+    /* Puzzler13 */
+    (function(){
+        try{
+            var a = Array.isArray(Array.prototype);
+        }catch(e){
+            console.error(e.message);        
+        }
+    })();
+
+    /* Puzzler14 */
+    (function(){
+        try{
+            var a = [0];
+            if ([0]) { 
+                console.log(a == true);
+            } else { 
+                console.log("wut");
+            }
+        }catch(e){
+            console.error(e.message);        
+        }
+    })();
+
+    /* Puzzler15 */
+    (function(){
+        try{
+            console.log([]==[]);
+        }catch(e){
+            console.error(e.message);        
+        }
+    })();
+
+    /* Puzzler16 */
+    (function(){
+        try{
+            console.log('5' + 3);
+            console.log('5' - 3);
+        }catch(e){
+            console.error(e.message);        
+        }
+    })();
+
+    /* Puzzler17 */
+    (function(){
+        try{
+            console.log(1 + - + + + - + 1);
+        }catch(e){
+            console.error(e.message);        
+        }
+    })();
+
+    /* Puzzler18 */
+    (function(){
+        try{
+            var ary = Array(3);
+            ary[0]=2
+            console.log(ary.map(function(elem) { return '1'; }));
+        }catch(e){
+            console.error(e.message);        
+        }
+    })();
+
+    /* Puzzler19 */
+    (function(){
+        try{
+            function sidEffecting(ary) { 
+                ary[0] = ary[2];
+            }
+            function bar(a,b,c) { 
+                c = 10
+                sidEffecting(arguments);
+                return a + b + c;
+            }
+            bar(1,1,1);
+        }catch(e){
+            console.error(e.message);        
+        }
+    })();
+
+
+    /* Puzzler20 */
+    (function(){
+        try{
+            var a = 111111111111111110000,
+            b = 1111;
+            console.log(a + b);
+        }catch(e){
+            console.error(e.message);        
+        }
+    })();
+
+
+    /* Puzzler21 */
+    (function(){
+        try{
+            console.log(Number.MIN_VALUE > 0);
+        }catch(e){
+            console.error(e.message);        
+        }
+    })();
+
+
+    /* Puzzler22 */
+    (function(){
+        try{
+            console.log([1 < 2 < 3, 3 < 2 < 1]);
+        }catch(e){
+            console.error(e.message);        
+        }
+    })();
+
+
+    /* Puzzler23 */
+    (function(){
+        try{
+            console.log(2 == [[[2]]]);
+        }catch(e){
+            console.error(e.message);        
+        }
+    })();
+
+
+    /* Puzzler24 */
+    (function(){
+        try{
+            console.log(3.toString());
+            console.log(3..toString());
+            console.log(3...toString());
+        }catch(e){
+            console.error(e.message);        
+        }
+    })();
+
+
+    /* Puzzler25 */
+    (function(){
+        try{
+            (function(){
+                var x = y = 1;
+            })();
+            console.log(y);
+            console.log(x);
+        }catch(e){
+            console.error(e.message);        
+        }
+    })();
+
+
+    /* Puzzler26 */
+    (function(){
+        try{
+            var a = /123/, b = /123/;
+            console.log(a == b);
+            console.log(a === b);
+        }catch(e){
+            console.error(e.message);        
+        }
+    })();
+
+
+    /* Puzzler27 */
+    (function(){
+        try{
+            var a = [1, 2, 3],
+                b = [1, 2, 3],
+                c = [1, 2, 4]
+            console.log(a ==  b);
+            console.log(a === b);
+            console.log(a > c);
+            console.log(a < c);
+        }catch(e){
+            console.error(e.message);        
+        }
+    })();
+
+
+    /* Puzzler28 */
+    (function(){
+        try{
+            var a = {}, b = Object.prototype;
+            console.log([a.prototype === b, Object.getPrototypeOf(a) === b]);
+        }catch(e){
+            console.error(e.message);        
+        }
+    })();
+
+
+    /* Puzzler29 */
+    (function(){
+        try{
+            function f() {}
+            var a = f.prototype, b = Object.getPrototypeOf(f);
+            console.log(a === b)
+        }catch(e){
+            console.error(e.message);        
+        }
+    })();
+
+
+    /* Puzzler30 */
+    (function(){
+        try{
+            function foo() { }
+            var oldName = foo.name;
+            foo.name = "bar";
+            console.log([oldName, foo.name]);
+        }catch(e){
+            console.error(e.message);        
+        }
+    })();
+
+    /* Puzzler31 */
+    (function(){
+        try{
+            console.log("1 2 3".replace(/\d/g, parseInt));
+        }catch(e){
+            console.error(e.message);        
+        }
+    })();
+
+
+    /* Puzzler32 */
+    (function(){
+        try{
+            function f() {}
+            var parent = Object.getPrototypeOf(f);
+            console.log(f.name);
+            console.log(parent.name );
+            console.log(typeof eval(f.name) );
+            console.log(typeof eval(parent.name) );
+        }catch(e){
+            console.error(e.message);        
+        }
+    })();
+
+
+    /* Puzzler33 */
+    (function(){
+        try{
+            var lowerCaseOnly =  /^[a-z]+$/;
+            console.log([lowerCaseOnly.test(null), lowerCaseOnly.test()]);
+        }catch(e){
+            console.error(e.message);        
+        }
+    })();
+
+
+    /* Puzzler34 */
+    (function(){
+        try{
+            var a = [,,,].join(", ");
+        }catch(e){
+            console.error(e.message);        
+        }
+    })();
+
+
+    /* Puzzler35 */
+    (function(){
+        try{
+            var a = {class: "Animal", name: 'Fido'};
+            console.log(a.class)
+        }catch(e){
+            console.error(e.message);        
+        }
+    })();
+
+    /* Puzzler17 */
+    (function(){
+        try{
+            console.log("END");
         }catch(e){
             console.error(e.message);        
         }
