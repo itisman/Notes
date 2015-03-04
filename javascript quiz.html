@@ -20,6 +20,7 @@
                     <li><a target="_blank" href="http://perfectionkills.com/javascript-quiz/">Javascript Quiz</a></li>
                     <li><a target="_blank" href="http://javascript-puzzlers.herokuapp.com/?utm_source=ourjs.com">Javascript Puzzlers</a></li>
                     <li><a target="_blank" href="http://ourjs.com/detail/52fb82e13bd19c4814000001">Javascript Puzzlers (cn)</a></li>
+                    <li><a target="_blank" href="http://www.nczonline.net/blog/2010/01/26/answering-baranovskiys-javascript-quiz/">Answering Baranovskiy's JavaScript quiz</a></li>
                 </ul>
             </li>
         </ul>
@@ -28,6 +29,7 @@
 </html>
 <script src="./LIB/jquery/jquery-2.1.3.js"></script>
 <script src="./LIB/google-code-prettify/src/run_prettify.js"></script>
+<script src="./LIB/home.js"></script>
 <script type="text/javascript">
     /* Quiz 1 */
     (function(){
@@ -240,13 +242,10 @@
     /* Puzzler6 */
     (function(){
         try{
-            var END = Math.pow(2, 53);
-            var START = END - 100;
-            var count = 0;
-            for (var i = START; i <= END; i++) {
-              count++;
-            }
-            console.log(count);
+            var END = Math.pow(2, 53);			
+            console.log(END);
+			END++;
+			console.log(END);
         }catch(e){
             console.error(e.message);        
         }
@@ -479,9 +478,9 @@
     /* Puzzler24 */
     (function(){
         try{
-            console.log(3.toString());
+            //console.log(3.toString());   output: Uncaught SyntaxError: Unexpected token ILLEGAL
             console.log(3..toString());
-            console.log(3...toString());
+            //console.log(3...toString());  output: Uncaught SyntaxError: Unexpected token .
         }catch(e){
             console.error(e.message);        
         }
@@ -621,15 +620,67 @@
         }
     })();
 
-    /* Puzzler17 */
+
+     /* Example1 */
     (function(){
         try{
-            console.log("END");
+            if(!("a" in window)){
+                var a = 1;
+            }
+            console.log(a);
+        }catch(e){
+            console.error(e.message);        
+        }
+    })();
+
+    /* Example2 */
+    (function(){
+        try{
+            var a = 1,
+            b = function a(x) {
+                x && a(--x);
+            };
+            console.log(a);
+        }catch(e){
+            console.error(e.message);        
+        }
+    })();
+
+    /* Example3 */
+    (function(){
+        try{
+            function a(x){
+                return x * 2;
+            }
+            var a;
+            console.log(a);
+        }catch(e){
+            console.error(e.message);        
+        }
+    })();
+
+    /* Example4 */
+    (function(){
+        try{
+            function b(x, y, a){
+                arguments[2] = 10;
+                console.log(a);
+            }
+            b(1, 2, 3);
+        }catch(e){
+            console.error(e.message);        
+        }
+    })();
+
+    /* Example5 */
+    (function(){
+        try{
+            function a(){
+                console.log(this);
+            }
+            a.call(null);
         }catch(e){
             console.error(e.message);        
         }
     })();
 </script>
-<script src="./LIB/home.js"></script>
-    
-

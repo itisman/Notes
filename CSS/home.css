@@ -12,6 +12,15 @@
     text-shadow: 0 1px white;
 }
 
+.content {
+    font-family: Georgia, Times New Roman, Serif;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+.content:first-line {
+    font-weight: bold;
+}
 #container, h1, #footer{
     width: 65%;
     min-width: 640px;

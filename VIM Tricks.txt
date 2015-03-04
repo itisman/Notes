@@ -234,3 +234,12 @@ A:  Press
         cf_ - change up to the first '_' (including);
         ct_ - change up to the first '_' (excluding);
 
+Q:  How to toggle Syntastic Error List?
+A:  Type following command:
+        ":Errors" (to show error list);
+        ":lclose" (to close error list);
+
+Q:  How to go Jump between Syntastic Errors?
+A:  Type following command:
+        ":lnext" (next error);
+        ":lprev" (prev error);
