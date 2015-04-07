@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Window performance property</title>
+<link rel="stylesheet" type="text/css" href="./CSS/home.css">
+<style></style>
+</head>
+<body>
+    <H1>Window performance property</H1>
+    <div id="container">
+        <img src="./IMG/pageload timing.png">
+    </div>
+    <div id="footer">
+        <h3> Document Information </h3>
+        <ul>
+            <li>
+                Date: 2015/04/07
+            </li>
+            <li>
+                Reference: 
+                <ul>
+                    <li><a target="_blank" href="http://www.coderjoy.com/?p=13">window.performance</a></li>
+                    <li><a target="_blank" href="http://javascript.ruanyifeng.com/bom/performance.html">Performance API</a></li>
+                    <li><a target="_blank" href="http://www.html5rocks.com/en/tutorials/webperformance/usertiming/">User Timing API</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>
+<script src="./LIB/jquery/jquery-2.1.3.js"></script>
+<script src="./LIB/home.js"></script>
+<script type="text/javascript">
+    /*  Difference between getTime() and performance()
+        1.getTime() can only support millisecond
+        2.getTime() can not calculate the time from services.
+     */
+    (function(){
+        try{
+            var start = new Date().getTime();
+            for(var i = 0, j = 10000; i < j; i++){}
+            var now = new Date().getTime();
+            var latency = now - start;
+            console.log("Task running time:" + latency);
+        }catch(e){
+            console.error(e.message);        
+        }
+    }());
+
+    /* performance.timing */
+    (function(){
+        try{
+            var t = window.performance.timing;
+            var pageLoadTime = t.loadEventEnd - t.navigationStart; 
+            console.log("page load time: " + pageLoadTime);
+            var dns = t.domainLookupEnd - t.domainLookupStart;
+            console.log("dns look up time: " + dns);
+            var tcp = t.connectEnd - t.connectStart;
+            console.log("tcp connection time: " + tcp);
+            var ttfb = t.responseStart - t.navigationStart;
+            console.log("response time: " + ttfb);
+            var wholePageLoadTime = t.loadEventEnd - t.navigationStart; 
+            console.log("whole page load time: " + wholePageLoadTime);
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }());   
+    /* performance.now */
+    (function(){
+        try{
+            var start = performance.now();
+            for(var i = 0, j = 10000; i < j; i++){}
+            var end = performance.now();
+            console.log("calulate time: " + (end - start));
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }());   
+    /* performance.mark , performance.measure*/
+    (function(){
+        try{
+            window.performance.mark('mark1');
+            for(var i = 0, j = 10000; i < j; i++){}
+            window.performance.mark('mark2');
+
+            //Calculate between marks
+            window.performance.measure('measure_mark1_mark2', 'mark1', 'mark2');
+            
+            var oMark1 = window.performance.getEntriesByName("mark1");
+            var allMeasures = window.performance.getEntriesByType("measure");
+            var allMarks = window.performance.getEntriesByType("mark");
+
+            //Clear marks and measures
+            window.performance.clearMarks('mark1');
+            window.performance.clearMarks();
+            window.performance.clearMeasures('measure_mark1_mark2');
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }());   
+    /*  performance.getEntries() 
+        All the request will located here.it will return the collection of request time information
+     */
+    (function(){
+        try{
+            var aRequest = window.performance.getEntries();
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }());   
+    /*  performance.navigation
+        basically it will provide user behavior information.
+
+        performance.navigation.TYPE_NAVIGATENEXT(0): page is open from link, URL, form submit, scripting operation.
+        performance.navigation.TYPE_RELOAD(1): page is open from reload or location.reload function.
+        performance.navigation.TYPE_BACK_FORWARD(2): page is open from 'go back' or 'go forward' button.
+        performance.navigation.TYPE_UNDEFINED(255): page is open from any other way.
+     */
+    (function(){
+        try{
+            var oNavigationInfo = window.performance.navigation;
+            console.log(oNavigationInfo.type);
+            //how many page redirect for current page.
+            console.log(oNavigationInfo.redirectCount);
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }());   
+</script>
+    
+

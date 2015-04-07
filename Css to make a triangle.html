@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Css to make a triangle</title>
+<link rel="stylesheet" type="text/css" href="./CSS/home.css">
+<style>
+.triangle{
+    margin: 10px;
+    display: inline-block;
+}
+#triangle_up{
+    width: 0;
+    height: 0;
+    border-left: 50px solid transparent;
+    border-right: 50px solid transparent;
+    border-bottom: 100px solid black;
+}
+#triangle_bottom{
+    width: 0;
+    height: 0;
+    border-left: 50px solid transparent;
+    border-right: 50px solid transparent;
+    border-top: 100px solid black;
+}
+#triangle_right{
+    width: 0;
+    height: 0;
+    border-left: 100px solid black;
+    border-bottom: 50px solid transparent;
+    border-top: 50px solid transparent;
+}
+#triangle_left{
+    width: 0;
+    height: 0;
+    border-right: 100px solid black;
+    border-bottom: 50px solid transparent;
+    border-top: 50px solid transparent;
+}
+#triangle_cycle{
+    width: 0;
+    height: 0;
+    border-left: 50px solid red;
+    border-right: 50px solid blue;
+    border-bottom: 50px solid yellow;
+    border-top: 50px solid green;
+}
+#triangle_cycle2{
+    width: 60px;
+    height: 60px;
+    border-left: 20px solid red;
+    border-right: 20px solid blue;
+    border-bottom: 20px solid yellow;
+    border-top: 20px solid green;
+}
+#template1{
+    width: 50px;
+    height: 0;
+    border-right: 50px solid transparent;
+    border-radius: 50px;
+    border-bottom: 50px solid black;
+    border-top: 50px solid black;
+}
+#template2{
+    width: 100px;
+    height: 0;
+    border-left: 50px solid transparent;
+    border-right: 50px solid transparent;
+    border-bottom: 100px solid black;
+}
+#template3{
+    width: 0;
+    border-left: 50px;
+    border-right: 50px solid black;
+    border-bottom: 50px solid black;
+    border-top: 50px solid black;
+    border-radius: 50px;
+} 
+#template4 { 
+    margin: 50px 0; 
+    position: relative; 
+    display: block; 
+    color: black; 
+    width: 0px; 
+    height: 0px; 
+    border-right: 100px solid transparent; 
+    border-bottom: 70px solid black; 
+    border-left: 100px solid transparent; 
+    -moz-transform: rotate(35deg); 
+    -webkit-transform: rotate(35deg); 
+    -ms-transform: rotate(35deg); 
+    -o-transform: rotate(35deg); 
+} 
+#template4:before { 
+    border-bottom: 80px solid black; 
+    border-left: 30px solid transparent; 
+    border-right: 30px solid transparent; 
+    position: absolute; 
+    height: 0; 
+    width: 0; 
+    top: -45px; 
+    left: -65px; 
+    display: block; 
+    content: ''; 
+    -webkit-transform: rotate(-35deg); 
+    -moz-transform: rotate(-35deg); 
+    -ms-transform: rotate(-35deg); 
+    -o-transform: rotate(-35deg); 
+} 
+#template4:after { 
+    position: absolute; 
+    display: block; 
+    color: black; 
+    top: 3px; 
+    left: -105px; 
+    width: 0px; 
+    height: 0px; 
+    border-right: 100px solid transparent; 
+    border-bottom: 70px solid black; 
+    border-left: 100px solid transparent; 
+    -webkit-transform: rotate(-70deg); 
+    -moz-transform: rotate(-70deg); 
+    -ms-transform: rotate(-70deg); 
+    -o-transform: rotate(-70deg); 
+    content: ''; 
+} 
+#template5 { 
+    width: 150px; 
+    height: 100px; 
+    margin-left:20px; 
+    -webkit-transform: skew(20deg); 
+    -moz-transform: skew(20deg); 
+    -o-transform: skew(20deg); 
+    background: black; 
+}
+#template6 { 
+    width: 0; 
+    height: 0; 
+    border-left: 50px solid transparent; 
+    border-right: 50px solid transparent; 
+    border-bottom: 100px solid black; 
+    position: relative; 
+} 
+#template6:after { 
+    width: 0; 
+    height: 0; 
+    border-left: 50px solid transparent; 
+    border-right: 50px solid transparent; 
+    border-top: 100px solid black; 
+    position: absolute; 
+    content: ""; 
+    top: 30px; 
+    left: -50px; 
+}
+#template7 { 
+    position: relative; 
+    width: 54px; 
+    border-width: 50px 18px 0; 
+    border-style: solid; 
+    border-color: black transparent; 
+} 
+#template7:before { 
+    content: ""; 
+    position: absolute; 
+    height: 0; 
+    width: 0; 
+    top: -85px; 
+    left: -18px; 
+    border-width: 0 45px 35px; 
+    border-style: solid; 
+    border-color: transparent transparent black; 
+}
+#template8 { 
+    width: 100px; 
+    height: 55px; 
+    background: black; 
+    position: relative; 
+} 
+#template8:before { 
+    content: ""; 
+    position: absolute; 
+    top: -25px; 
+    left: 0; 
+    width: 0; 
+    height: 0; 
+    border-left: 50px solid transparent; 
+    border-right: 50px solid transparent; 
+    border-bottom: 25px solid black; 
+} 
+#template8:after { 
+    content: ""; 
+    position: absolute; 
+    bottom: -25px; 
+    left: 0; 
+    width: 0; 
+    height: 0; 
+    border-left: 50px solid transparent; 
+    border-right: 50px solid transparent; 
+    border-top: 25px solid black; 
+} 
+#template9 { 
+    width: 100px; 
+    height: 100px; 
+    background: black; 
+    position: relative; 
+} 
+#template9:before { 
+    content: ""; 
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    border-bottom: 29px solid black; 
+    border-left: 29px solid #eee; 
+    border-right: 29px solid #eee; 
+    width: 42px; 
+    height: 0; 
+} 
+#template9:after { 
+    content: ""; 
+    position: absolute; 
+    bottom: 0; 
+    left: 0; 
+    border-top: 29px solid black; 
+    border-left: 29px solid #eee; 
+    border-right: 29px solid #eee; 
+    width: 42px; 
+    height: 0; 
+}
+#template10 { 
+    position: relative; 
+    width: 100px; 
+    height: 90px; 
+} 
+#template10:before, 
+#template10:after { 
+    position: absolute; 
+    content: ""; 
+    left: 50px; 
+    top: 0; 
+    width: 50px; 
+    height: 80px; 
+    background: black; 
+    -moz-border-radius: 50px 50px 0 0; 
+    border-radius: 50px 50px 0 0; 
+    -webkit-transform: rotate(-45deg); 
+    -moz-transform: rotate(-45deg); 
+    -ms-transform: rotate(-45deg); 
+    -o-transform: rotate(-45deg); 
+    transform: rotate(-45deg); 
+    -webkit-transform-origin: 0 100%; 
+    -moz-transform-origin: 0 100%; 
+    -ms-transform-origin: 0 100%; 
+    -o-transform-origin: 0 100%; 
+    transform-origin: 0 100%; 
+} 
+#template10:after { 
+    left: 0; 
+    -webkit-transform: rotate(45deg); 
+    -moz-transform: rotate(45deg); 
+    -ms-transform: rotate(45deg); 
+    -o-transform: rotate(45deg); 
+    transform: rotate(45deg); 
+    -webkit-transform-origin: 100% 100%; 
+    -moz-transform-origin: 100% 100%; 
+    -ms-transform-origin: 100% 100%; 
+    -o-transform-origin: 100% 100%; 
+    transform-origin :100% 100%; 
+}
+#template11 { 
+    position: relative; 
+    width: 212px; 
+    height: 100px; 
+} 
+#template11:before, 
+#template11:after { 
+    content: ""; 
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    width: 60px; 
+    height: 60px; 
+    border: 20px solid black; 
+    -moz-border-radius: 50px 50px 0 50px; 
+    border-radius: 50px 50px 0 50px; 
+    -webkit-transform: rotate(-45deg); 
+    -moz-transform: rotate(-45deg); 
+    -ms-transform: rotate(-45deg); 
+    -o-transform: rotate(-45deg); 
+    transform: rotate(-45deg); 
+} 
+#template11:after { 
+    left: auto; 
+    right: 0; 
+    -moz-border-radius: 50px 50px 50px 0; 
+    border-radius: 50px 50px 50px 0; 
+    -webkit-transform: rotate(45deg); 
+    -moz-transform: rotate(45deg); 
+    -ms-transform: rotate(45deg); 
+    -o-transform: rotate(45deg); 
+    transform: rotate(45deg); 
+} 
+#template12 { 
+    display:block; 
+    width: 126px; 
+    height: 180px; 
+    background-color: black; 
+    -webkit-border-radius: 63px 63px 63px 63px / 108px 108px 72px 72px; 
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; 
+} 
+
+#template13 { 
+    width: 120px; 
+    height: 80px; 
+    background: black; 
+    position: relative; 
+    -moz-border-radius: 10px; 
+    -webkit-border-radius: 10px; 
+    border-radius: 10px; 
+    } 
+#template13:before { 
+    content:""; 
+    position: absolute; 
+    right: 100%; 
+    top: 26px; 
+    width: 0; 
+    height: 0; 
+    border-top: 13px solid transparent; 
+    border-right: 26px solid black; 
+    border-bottom: 13px solid transparent; 
+}
+#template14 { 
+    background: black; 
+    width: 80px; 
+    height: 80px; 
+    position: relative; 
+    text-align: center; 
+} 
+#template14:before, #template14:after { 
+    content: ""; 
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    height: 80px; 
+    width: 80px; 
+    background: black; 
+} 
+#template14:before { 
+    -webkit-transform: rotate(30deg); 
+    -moz-transform: rotate(30deg); 
+    -ms-transform: rotate(30deg); 
+    -o-transform: rotate(30deg); 
+    transform: rotate(30deg); 
+} 
+#template14:after { 
+    -webkit-transform: rotate(60deg); 
+    -moz-transform: rotate(60deg); 
+    -ms-transform: rotate(60deg); 
+    -o-transform: rotate(60deg); 
+    transform: rotate(60deg); 
+} 
+
+#template15 { 
+    background: black; 
+    width: 80px; 
+    height: 80px; 
+    position: relative; 
+    text-align: center; 
+    -webkit-transform: rotate(20deg); 
+    -moz-transform: rotate(20deg); 
+    -ms-transform: rotate(20deg); 
+    -o-transform: rotate(20eg); 
+    transform: rotate(20deg); 
+} 
+#template15:before { 
+    content: ""; 
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    height: 80px; 
+    width: 80px; 
+    background: black; 
+    -webkit-transform: rotate(135deg); 
+    -moz-transform: rotate(135deg); 
+    -ms-transform: rotate(135deg); 
+    -o-transform: rotate(135deg); 
+    transform: rotate(135deg); 
+}
+#template16 { 
+    border-style: solid; 
+    border-color: transparent transparent black transparent; 
+    border-width: 0 25px 25px 25px; 
+    height: 0; 
+    width: 50px; 
+    position: relative; 
+    margin: 20px 0 50px 0; 
+} 
+#template16:after { 
+    content: ""; 
+    position: absolute; 
+    top: 25px; 
+    left: -25px; 
+    width: 0; 
+    height: 0; 
+    border-style: solid; 
+    border-color: black transparent transparent transparent; 
+    border-width: 70px 50px 0 50px; 
+}
+#template17 { 
+    width: 96px; 
+    height: 48px; 
+    background: #eee; 
+    border-color: black; 
+    border-style: solid; 
+    border-width: 2px 2px 50px 2px; 
+    border-radius: 100%; 
+    position: relative; 
+} 
+#template17:before { 
+    content: ""; 
+    position: absolute; 
+    top: 50%; 
+    left: 0; 
+    background: #eee; 
+    border: 18px solid black; 
+    border-radius: 100%; 
+    width: 12px; 
+    height: 12px; 
+} 
+#template17:after { 
+    content: ""; 
+    position: absolute; 
+    top: 50%; 
+    left: 50%; 
+    background: black; 
+    border: 18px solid #eee; 
+    border-radius:100%; 
+    width: 12px; 
+    height: 12px; 
+}
+.message-box { 
+    position:relative; 
+    display:inline-block;
+    margin:80px 0 0 100px; 
+    width:240px; 
+    height:60px; 
+    line-height:60px; 
+    background:gray; 
+    box-shadow:1px 2px 3px gray; 
+    border:1px solid  black; 
+    border-radius:4px; 
+    text-align:center; 
+    color: white; 
+}
+/* border */
+.triangle-border { 
+    position:absolute; 
+    left:30px; 
+    overflow:hidden; 
+    width:0; height:0; 
+    border-width:10px; 
+    border-style:solid dashed dashed dashed; 
+}
+.tb-border { 
+    bottom:-20px;
+    border-color: black transparent transparent transparent; 
+}
+.tb-background { 
+    bottom:-19px; 
+    border-color:gray transparent transparent transparent; 
+}
+
+/*character*/
+.triangle-character { 
+    position:absolute; 
+    left:30px; 
+    overflow:hidden; 
+    width:26px; 
+    height:26px; 
+    font:normal 26px "宋体"; 
+}
+.tc-background { 
+    bottom:-12px; 
+    color:gray; 
+}
+.tc-border {  
+    bottom:-13px; 
+    color: black;
+}
+
+/*css3 transfrom*/
+.triangle-css3 { 
+    position:absolute; 
+    bottom:-8px; 
+    bottom:-6px\0; 
+    left:30px; overflow:hidden; 
+    width:13px; height:13px;
+    background:gray; 
+    border-bottom:1px solid  black; 
+    border-right:1px solid  black;
+}
+.transform { 
+    -webkit-transform:rotate(45deg); 
+    -moz-transform:rotate(45deg); 
+    -o-transform:rotate(45deg); 
+    transform:rotate(45deg); 
+}
+/*ie7-9*/
+.ie-transform-filter { 
+    -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(M11=0.7071067811865475, M12=-0.7071067811865477, M21=0.7071067811865477, M22=0.7071067811865475, SizingMethod='auto expand')";
+    filter: progid:DXImageTransform.Microsoft.Matrix( M11=0.7071067811865475,M12=-0.7071067811865477,M21=0.7071067811865477,M22=0.7071067811865475,SizingMethod='auto expand');
+}
+
+</style>
+</head>
+<body>
+    <H1>Css to make a triangle</H1>
+    <div id="container">
+        <h2> Triangle </h2>
+        <div id="triangle_up" class="triangle"></div>
+        <div id="triangle_bottom" class="triangle"></div>
+        <div id="triangle_right" class="triangle"></div>
+        <div id="triangle_left" class="triangle"></div>
+        </br>
+        <h2> Principle </h2>
+        <div id="triangle_cycle2" class="triangle"></div>
+        <div id="triangle_cycle" class="triangle"></div>
+        </br>
+        <h2> Additional </h2>
+        <div id="template1" class="triangle"></div>
+        <div id="template2" class="triangle"></div>
+        <div id="template3" class="triangle"></div>
+        <div id="template4" class="triangle"></div>
+        <div id="template5" class="triangle"></div>
+        <div id="template6" class="triangle"></div>
+        <div id="template7" class="triangle"></div>
+        <div id="template8" class="triangle"></div>
+        <div id="template9" class="triangle"></div>
+        <div id="template10" class="triangle"></div>
+        <div id="template11" class="triangle"></div>
+        <div id="template12" class="triangle"></div>
+        <div id="template13" class="triangle"></div>
+        <div id="template14" class="triangle"></div>
+        <div id="template15" class="triangle"></div>
+        <div id="template16" class="triangle"></div>
+        <div id="template17" class="triangle"></div>
+        </br>
+        <h2> message box </h2>
+        <div class="message-box">
+            <span>implement by border property</span>
+            <div class="triangle-border tb-border"></div>
+            <div class="triangle-border tb-background"></div>
+        </div>
+        <div class="message-box">
+            <span>implement by triangle character</span>
+            <div class="triangle-character tc-border">◆</div>
+            <div class="triangle-character tc-background">◆</div>
+        </div>
+        <div class="message-box">
+            <span>implement by transform property</span>
+            <div class="triangle-css3 transform ie-transform-filter"></div>
+        </div>
+    </div>
+    <div id="footer">
+        <h3> Document Information </h3>
+        <ul>
+            <li>
+                Date: 2015/04/03
+            </li>
+            <li>
+                Reference: 
+                <ul>
+                    <li><a target="_blank" href="http://www.jb51.net/css/41448.html">css draw</a></li>
+                    <li><a target="_blank" href="http://www.feelcss.com/three-pure-css-to-achieve-the-triangle-method.html">three-pure-css-to-achieve-the-triangle-method</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>
+<script src="./LIB/jquery/jquery-2.1.3.js"></script>
+<script src="./LIB/google-code-prettify/src/run_prettify.js"></script>
+<script src="./LIB/home.js"></script>
+<script type="text/javascript">
+    /*  CSS to make a triangle
+        Here is way to use css to make a triangle. Basically, It use the border to do that. The triangle is nothing but the border.
+        It can be used in anywhere, not only as a triangle.
+
+        In the first line, four triangle is made by border.
+        In the second line, this two will show you the principle.
+        In the third line, it will show you lot of things can be done by this.
+     */
+</script>
+    
+

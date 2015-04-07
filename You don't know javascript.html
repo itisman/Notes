@@ -28,7 +28,7 @@
 <script src="./LIB/google-code-prettify/src/run_prettify.js"></script>
 <script src="./LIB/home.js"></script>
 <script type="text/javascript">
-    /*  -- You don't know JavaScript -- 
+    /*  -- Outline -- 
         - Up & Going
         - Scope & Closures
         - this & Object Prototypes
@@ -37,22 +37,47 @@
         - ES6 & Beyond
      */
 
-    /*  Up & Going
+    /*  -- Up & Going --
         Desc ...
         more info ......
      */
-    (function(){
-        try{
-            console.log("Code snippet");
-        }catch(e){
-            console.error(e.message);        
-        }
-    }());
 
-    /*  Scope & Closures
-        Desc ...
-        more info ......
+    /*  -- Scope & Closures --
      */
+
+    /*  What is Scope? 
+        where do those variables live? In other words, where are they stored? And, most importantly, how does our program find them when it needs them?
+        These questions speak to the need for a well-defined set of rules for storing variables in some location, and for finding those variables at a later time. We'll call that set of rules: Scope.
+        Where and how do these Scope rules get set?
+     */
+
+    /*  Compiler Theory 
+        Traditional compiled-language process:
+            1. Tokenizing/Lexing: breaking up a string of characters into meaningful (to the language) chunks, called tokens.
+                E.g. var a = 2 will be broken up into following tokens: var, a, =, 2, ;
+                Note: The difference between tokenizing and lexing is subtle and academic, but it centers on whether or not these tokens are identified in a stateless or stateful way. 
+                Put simply, if the tokenizer were to invoke stateful parsing rules to figure out whether a should be considered a distinct token or just part of another token, that would be lexing.
+            2.  Parsing: taking a stream (array) of tokens and turning it into a tree of nested elements, which collectively represent the grammatical structure of the program. 
+                This tree is called an "AST" (Abstract Syntax Tree).
+                E.g. var a = 2 might start with a top-level node called VariableDeclaration, with a child node called Identifier (whose value is a), 
+                and another child called AssignmentExpression which itself has a child called NumericLiteral (whose value is 2).
+            3.  Code-Generation: the process of taking an AST and turning it into executable code. This part varies greatly depending on the language, the platform it's targeting, etc.
+
+        JS engines use all kinds of tricks (like JITs, which lazy compile and even hot re-compile, etc.)
+     */
+
+    /*  Understanding Scope 
+        The Cast
+            Engine: responsible for start-to-finish compilation and execution of our JavaScript program.
+            Compiler: one of Engine's friends; handles all the dirty work of parsing and code-generation (see previous section).
+            Scope: another friend of Engine; collects and maintains a look-up list of all the declared identifiers (variables), and enforces a strict set of rules as to how these are accessible to currently executing code.   
+
+        Back & Forth
+            The first thing Compiler will do with this program is perform lexing to break it down into tokens, which it will then parse into a tree.then Compiler gets to code-generation.
+            Two distinct actions are taken for a variable assignment: First, Compiler declares a variable (if not previously declared in the current scope), and second, when executing, Engine looks up the variable in Scope and assigns to it, if found.
+
+        Compiler Speak
+    */ 
     (function(){
         try{
             console.log("Code snippet");
@@ -108,16 +133,6 @@
             console.error(e.message);        
         }
     }());
-
-    /* Title 2 */
-    (function(){
-        try{
-            console.log("Code snippet2");
-        }catch(e){
-            console.error(e.message);        
-        }
-        
-    }());   
 </script>
     
 

@@ -29,6 +29,10 @@
     padding: 1em;
 }
 
+#container img{    
+    max-width: 100%;
+}
+
 h1 {
     text-align: center;
 }

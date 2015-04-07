@@ -148,7 +148,7 @@
         },
     ];
 
-     /* Main function to transfer from list to tree */
+    /* Main function to transfer from list to tree */
     function ListToTree(nodes, childTag, parentTag){
         var map = {}, node;
     
@@ -209,7 +209,53 @@
         }
     
     }
-    console.log(JSON.stringify(ListToTree(nodes, "ID", "parentId")));
+
+    /*List to tree without metadata */
+    function ListToTree2(nodes, childTag, parentTag, oPropertyNames) {
+        var map = {}, node;
+
+        for ( var i = 0, j = nodes.length - 1; i <= j; j -= 1) {
+            node = nodes[j];
+            if (node[parentTag] === undefined || node[parentTag] === "") {
+                node[parentTag] = "ROOT";
+            }
+
+            if (!map[node[childTag]]) {
+                var child = {};
+                child.length = 0;
+                child[childTag] = node[childTag];
+
+                for ( var property in oPropertyNames) {
+                    if (oPropertyNames.hasOwnProperty(property)) {
+                        child[property] = node[oPropertyNames[property]];
+                    }
+                }
+
+                map[node[childTag]] = child;
+            } else {
+                for ( var property in oPropertyNames) {
+                    if (oPropertyNames.hasOwnProperty(property)) {
+                        map[node[childTag]][property] = node[oPropertyNames[property]];
+                    }
+                }
+            }
+
+            if (!map[node[parentTag]]) {
+                var parent = {};
+                parent.length = 0;
+                parent[childTag] = node[parentTag];
+
+                map[node[parentTag]] = parent;
+            }
+
+            map[node[parentTag]]["\"" + map[node[parentTag]].length + "\""] = map[node[childTag]];
+            map[node[parentTag]].length += 1;
+
+        }
+
+        console.log(map["ROOT"]);
+        return map["ROOT"];
+    }
 </script>
 <script src="./LIB/home.js"></script>
     

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dom Scripting</title>
+<link rel="stylesheet" type="text/css" href="./CSS/home.css">
+<style></style>
+</head>
+<body>
+    <H1>Dom Scripting</H1>
+    <div id="container"></div>
+    <div id="footer">
+        <h3> Document Information </h3>
+        <ul>
+            <li>
+                Date: 2015/03/17
+            </li>
+            <li>
+                Reference: 
+                <ul>
+                    <li><a target="_blank" href="http://www.github.com">github</a></li>
+                    <li><a target="_blank" href="http://www.google.com">google</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>
+<script src="./LIB/jquery/jquery-2.1.3.js"></script>
+<script src="./LIB/google-code-prettify/src/run_prettify.js"></script>
+<script src="./LIB/home.js"></script>
+<script type="text/javascript">
+    /*  Document Object Model
+        - elements node
+        - attributes node
+        - text node
+     */
+
+    /*
+        getElementsByClassName is only support for HTML5 DOM.
+     */
+    (function(){
+        try{
+            var getElementsByClassName = function(node, className){
+                if(node.getElementsByClassName){
+                    return node.getElementsByClassName(className);
+                } else {
+                    var results = [];
+                    var elems = node.getElementsByTagName("*");
+                    for(var i = 0, j = elems.length; i < j; i++){
+                        if(elems[i].className.indexOf(classname) !== -1){
+                            results.push(elems[i]);
+                        }
+                    }
+
+                    return results;
+                }
+            }
+
+            var oContainer = document.getElementById("container");
+            var oCodes = getElementsByClassName(oContainer, "codePanel");
+            console.log(oCodes.length);
+        }catch(e){
+            console.error(e.message);        
+        }
+    }());
+
+    /* 
+        getAttribute/ setAttribute is only works for element node
+     */
+    (function(){
+        try{
+            var oTitles = document.getElementsByTagName("H1");
+            for(var i = 0, j = oTitles.length; i < j; i++){
+                var title_text = oTitles[i].getAttribute("title");
+                if(title_text){
+                    console.log(title_text);
+                    oTitles[i].setAttribute("title", title_text + " --Updated");
+                    //Same effect as above: oTitles[i].title = title_text + " --Updated";
+                }
+            }
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }());  
+
+    /* 
+        return false to avoid default behavior
+        <a href="http://www.example.com" onclick="return false;">Click me</a>
+     */
+
+    /* 
+        childNodes, firstChild, lastChild, nodeType, nodeValue
+
+        nodeType
+            - element   1
+            - attribute 2
+            - text      3
+     */
+    (function(){
+        try{
+            var body_element = document.getElementsByTagName("body")[0];
+            var aChildNodes = body_element.childNodes;
+            console.log(aChildNodes.length);
+            console.log(aChildNodes.firstChild.nodeType);
+            console.log(aChildNodes.lastChild.nodeValue);
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }());  
+
+    /* 
+        Javascript pseudo-protocol
+        <a href="javascript:doSomethingFn('www.baidu.com')">Example</a>
+        
+        Inline event handlers
+        <a href="www.baidu.com" onClick="doSomethingFn('www.baidu.com')">Example</a>
+        
+        Best practice
+        <a href="www.baidu.com" onClick="doSomethingFn(this.href); return false">Example</a>
+     */
+
+    /*
+        Performance consideration
+    */
+
+    /*
+        Minimizing DOM access and markup
+   */
+    (function(){
+        try{
+            //Assign the original result to a variable and reuse the same result in the loop.
+            var links = document.getElementsByTagName("a");
+            if(links.length > 0){
+                for(var i = 0, j = links.length; i < j;i++){
+                    //do something to each link
+                }
+            }
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }());  
+
+    /* 
+        Assembling and placing scripts
+        - combine all the js file into a single file
+        - including all your js file at the end of the document.
+     */
+
+    /*
+        Minification
+        - Douglas Crockford's JSMin (http://www.crockford.com/javascript/jsmin.html)
+        - Yahoo!'s YUI Compressor (http://developer.yahoo.com/yui/compressor/)
+        - Google's Closure Compiler (http://closure-compiler.appspot.com/home)
+     */
+    (function(){
+        try{
+            console.log("Code snippet2");
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }());  
+
+    /* Title 2 */
+    (function(){
+        try{
+            console.log("Code snippet2");
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }());  
+
+    /* Title 2 */
+    (function(){
+        try{
+            console.log("Code snippet2");
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }());  
+
+    /* Title 2 */
+    (function(){
+        try{
+            console.log("Code snippet2");
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }());  
+
+    /* Title 2 */
+    (function(){
+        try{
+            console.log("Code snippet2");
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }());  
+
+    /* Title 2 */
+    (function(){
+        try{
+            console.log("Code snippet2");
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }());  
+
+    /* Title 2 */
+    (function(){
+        try{
+            console.log("Code snippet2");
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }());  
+
+    /* Title 2 */
+    (function(){
+        try{
+            console.log("Code snippet2");
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }());  
+
+</script>
+    
+

@@ -167,7 +167,7 @@ Q:  How to folding?
 A:  Press  
         Basics: 
         zi	switch folding on or off
-        za	toggle current fold open/closed
+        za	toggle current foldoopen/closed
         zc	close current fold
         zR	open all folds
         zM	close all folds
@@ -243,3 +243,9 @@ Q:  How to go Jump between Syntastic Errors?
 A:  Type following command:
         ":lnext" (next error);
         ":lprev" (prev error);
+
+Q:  How to go to exact line in VIM?
+A:  Type following command:
+        ":150" (go to line 150);
+    Press
+        150gg/150G  (go to line 150);
