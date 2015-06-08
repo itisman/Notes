@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>storage cookie session</title>
+<link rel="stylesheet" type="text/css" href="./CSS/home.css">
+<style></style>
+</head>
+<body>
+    <H1>storage cookie session</H1>
+    <div id="container">
+        <img src="./IMG/html storage history.jpg">
+    </div>
+    <div id="footer">
+        <h3>Document Information</h3>
+        <ul>
+            <li>
+                Date: 2015/04/09
+            </li>
+            <li>
+                Reference: 
+                <ul>
+                    <li><a target="_blank" href="http://www.cnblogs.com/xiaowei0705/archive/2011/04/19/2021372.html">HTML5 localStorage</a></li>
+                    <li><a target="_blank" href="https://developer.mozilla.org/en/docs/Web/Guide/API/DOM/Storage">DOM Storage guide</a></li>
+                    <li><a target="_blank" href="http://diveintohtml5.info/storage.html">storage</a></li>
+                    <li><a target="_blank" href="http://blog.csdn.net/fangaoxin/article/details/6952954">cookie and session mechanism</a></li>
+                    <li><a target="_blank" href="http://www.tuxradar.com/practicalphp/10/0/0">cookies and sessions</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>
+<script src="./LIB/jquery/jquery-2.1.3.js"></script>
+<script src="./LIB/home.js"></script>
+<script type="text/javascript">
+    /*
+        Storage
+
+        HTML5 Storage is based on named key/value pairs. You store data based on a named key, then you can retrieve that data with the same key. The named key is a string. The data can be any type supported by JavaScript, including strings, Booleans, integers, or floats. However, the data is actually stored as a string. If you are storing and retrieving anything other than strings, you will need to use functions like parseInt() or parseFloat() to coerce your retrieved data into the expected JavaScript datatype.
+
+        This is a constructor (Storage) for all Storage instances (sessionStorage and globalStorage[location.hostname]). Setting Storage.prototype.removeKey = function(key){ this.removeItem(this.key(key)) } would be accessed as localStorage.removeKey and sessionStorage.removeKey.
+        globalStorage items are not an instance of Storage, but instead are an instance of StorageObsolete.
+        Storage is defined by the WhatWG Storage Interface as this:
+
+        interface Storage {
+            readonly attribute unsigned long length;
+            [IndexGetter] DOMString key(in unsigned long index);
+            [NameGetter] DOMString getItem(in DOMString key);
+            [NameSetter] void setItem(in DOMString key, in DOMString data);
+            [NameDeleter] void removeItem(in DOMString key);
+            void clear();
+        };
+    */
+
+    /*
+        SessionStorage
+
+        This is a global object (sessionStorage) that maintains a storage area that's available for the duration of the page session. A page session lasts for as long as the browser is open and survives over page reloads and restores. Opening a page in a new tab or window will cause a new session to be initiated.
+    */
+
+    /*  
+        localStorage
+
+        localStorage is the same as sessionStorage with same same-origin rules applied but it is persistent. localStorage was introduced in Firefox 3.5.
+     */
+    (function(){
+        try{
+            if(window.localStorage){
+                console.log("This browser supports localStorage");
+                localStorage.test1 = 3;
+                localStorage["test2"] = "A";
+                localStorage.setItem("test3","333");
+
+                var test1 = localStorage.test1;
+                var test2 = localStorage["test2"];
+                var test3 = localStorage.getItem("test3"); //recommended
+
+                for(var i = 0; i < localStorage.length; i++){
+                    console.log(localStorage.key(i) + ": " + localStorage.getItem(localStorage.key(i)));
+                }
+
+                localStorage.removeItem("test1");
+                console.log(localStorage.length);
+                //localStorage.clear();
+                //console.log(localStorage.length);
+            } else {
+                console.log("This browser does NOT supports localStorage");
+            }
+        }catch(e){
+            console.error(e.message);        
+        }
+    }());
+
+    /* 
+        page load count using localStorage and sessionStorage
+
+        pageLoadCount by sessionStorage will be reset to 0 when open in a new page or tab.
+        pageLoadCount by localStorage will be persistent.
+     
+     */
+    (function(){
+        try{
+            if (!sessionStorage.getItem("pageLoadCount")){
+                sessionStorage.setItem("pageLoadCount", 0);
+            }
+            sessionStorage.setItem("pageLoadCount", parseInt(sessionStorage.getItem("pageLoadCount")) + 1);
+            console.log("pageLoadCount by sessionStorage: " + sessionStorage.getItem("pageLoadCount"));
+
+            if (!localStorage.getItem("pageLoadCount")){
+                localStorage.setItem("pageLoadCount", 0);
+            }
+            localStorage.setItem("pageLoadCount", parseInt(localStorage.getItem("pageLoadCount")) + 1);
+            console.log("pageLoadCount by localStorage: " + localStorage.getItem("pageLoadCount"));
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }());   
+
+    /* 
+        storage event
+
+        the variable e will be a StorageEvent object, which has the following useful properties:
+            key	            string the named key that was added, removed, or modified
+            oldValue	    any the previous value (now overwritten), or null if a new item was added
+            newValue	    any the new value, or null if an item was removed
+            url*	        string the page which called a method that triggered this change
+     
+     */
+    (function(){
+        try{
+            //Browser do not support this well.
+            var storageHandler = function(e){
+                if(!e){
+                    e = window.event;
+                }
+                console.log("storageHandler fired");
+            }
+
+            if(window.addEventListener){
+                window.addEventListener("storage", storageHandler, false);
+            } else if(window.attachEvent){
+                window.attachEvent("onStorage", storageHandler);
+            }
+
+            localStorage.setItem("test1", "aaaa");
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }());   
+
+    /*
+        Limitation in current Browsers
+
+        In talking about the history of local storage hacks using third-party plugins, I made a point of mentioning the limitations of each technique, such as storage limits. I just realized that I haven't mentioned anything about the limitations of the now-standardized HTML5 Storage. I'll give you the answers first, then explain them. The answers, in order of importance, are "5 megabytes," "QUOTA_EXCEEDED_ERR," and "no."
+
+        "5 megabytes" is how much storage space each origin gets by default. This is surprisingly consistent across browsers, although it is phrased as no more than a suggestion in the HTML5 Storage specification. One thing to keep in mind is that you're storing strings, not data in its original format. If you're storing a lot of integers or floats, the difference in representation can really add up. Each digit in that float is being stored as a character, not in the usual representation of a floating point number.
+        
+        "QUOTA_EXCEEDED_ERR" is the exception that will get thrown if you exceed your storage quota of 5 megabytes. "No" is the answer to the next obvious question, "Can I ask the user for more storage space?" At time of writing (February 2011), no browser supports any mechanism for web developers to request more storage space. Some browsers (like Opera) allow the user to control each site's storage quota, but it is purely a user-initiated action, not something that you as a web developer can build into your web application.
+
+
+    */
+
+    /*
+        Cookies
+
+        W3C stardard will prevent user to update the cookie do not belongs to current page.
+
+        potentially dealbreaking: 
+        Cookies are included with every HTTP request, thereby slowing down your web application by needlessly transmitting the same data over and over
+        Cookies are included with every HTTP request, thereby sending data unencrypted over the internet (unless your entire web application is served over SSL)
+        Cookies are limited to about 4 KB of data — enough to slow down your application (see above), but not enough to be terribly useful
+
+    */
+    (function(){
+        try{
+            console.error(document.cookie);        
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }());   
+
+    /* 
+        Session
+
+        Sessions are stored on the server, which means clients do not have access to the information you store about them - this is particularly important if you store shopping baskets or other information you do not want you visitors to be able to edit by hand by hacking their cookies. Session data, being stored on your server, does not need to be transmitted with each page; clients just need to send an ID and the data is loaded from the local file. Finally, sessions can be any size you want because they are held on your server, whereas many web browsers have a limit on how big cookies can be to stop rogue web sites chewing up gigabytes of data with meaningless cookie information.
+
+     Sessions are a combination of a server-side cookie and a client-side cookie, with the client-side cookie containing nothing other than a reference to the correct data on the server. Thus, when the user visits the site, their browser sends the reference code to the server, which loads the corresponding data.
+    This may seem a bit clumsier than just having a client-side cookie with all your data in, but there are a few advantages:
+    Your server-side cookie can contain very large amounts of data with no hassle - client-side cookies are limited in size
+    Your client-side cookie contains nothing other than a small reference code - as this cookie is passed each time someone visits a page on your site, you are saving a lot of bandwidth by not transferring large client-side cookies around
+    Session data is much more secure - only you are able to manipulate it, as opposed to client-side cookies which are editable by all
+    It is also important to note that sessions only last till the user closes their browser, whereas cookies can be configured to last longer. However, other than the above, there is not much difference between session data and cookie data for most purposes.
+     */
+
+</script>
+</script>
+    
+

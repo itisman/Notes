@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>How Jquery Works</title>
+<link rel="stylesheet" type="text/css" href="./CSS/home.css">
+<style></style>
+</head>
+<body>
+    <H1>How Jquery Works</H1>
+    <div id="container"></div>
+    <div id="footer">
+        <h3> Document Information </h3>
+        <ul>
+            <li>
+                Date: 2015/05/12
+            </li>
+            <li>
+                Reference: 
+                <ul>
+                    <li><a target="_blank" href="http://www.codeproject.com/Articles/426013/How-jQuery-works">How Jquery works</a></li>
+                    <li><a target="_blank" href="http://mag.splashnology.com/article/the-structure-of-jquery-dive-into-source-code/2517/">the structure of jquery</a></li>
+                    <li><a target="_blank" href="http://nuysoft.iteye.com/blog/1177451">jquery source code</a></li>
+                    <li><a target="_blank" href="http://www.cnblogs.com/aaronjs/p/3279314.html">jquery source code2</a></li>
+                    <li><a target="_blank" href="http://blog.quickui.org/2012/06/07/jquery-fn-init/">jQuery fn init</a></li>
+                    <li><a target="_blank" href="http://mag.splashnology.com/article/the-structure-of-jquery-dive-into-source-code/2517/">The structure of jQuery</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>
+<script src="./LIB/jquery/jquery-2.1.3.js"></script>
+<script src="./LIB/home.js"></script>
+<script type="text/javascript">
+    /*
+       JavaScript Constructor        
+     */
+    //This constructor will implicitly return 'this';
+    var normalConstructor = function(name){
+        this.name = name;
+    };
+
+    //Do this can avoid global object pollution 
+    var betterConstructor = function(age){
+        if(this === window){
+            return new betterConstructor(age);
+        }
+        this.age = age;
+    };
+
+    var ins1 = new normalConstructor('Jim');
+    console.log(window.name);
+    var ins2 = normalConstructor('Jim');
+    console.log(window.name);   //global object polluted.
+    var ins3 = new betterConstructor('8');
+    console.log(window.age);
+    var ins4 = betterConstructor('8');
+    console.log(window.age);
+
+    /*
+       myQuery and private init function 
+     */
+    var myQueryWithoutInit = (function (){
+    	// Define a local copy of 'k'
+
+        function init(){
+            return this;
+        };
+    	var k = function (selector, context)
+    	{
+    		// The k object is actually just the init constructor 'enhanced'
+            var kobj = new init();
+    		return kobj;
+    	};
+    
+    	//Define k’s fn prototype, specially contains init method
+    	// Give the init function the 'k' prototype for later instantiation
+        k.fn = k.prototype = init.prototype = {};
+    
+        k.fn.fn1 = function(){
+            console.log("fn1");
+        };
+
+        k.fn.fn2 = function(){
+            console.log("fn2");
+        };
+
+    	// Return 'k' to the global object
+    	return k;
+    })();
+
+ 
+    /*
+       myQuery and init function is under myQuery.
+     */
+    var myQueryWithInit = (function (){
+    	// Define a local copy of 'k'
+    	var k = function (selector, context)
+    	{
+    		// The k object is actually just the init constructor 'enhanced'
+    		var kobj = new k.fn.init(selector, context);
+    		return kobj;
+    	};
+    
+    	//Define k’s fn prototype, specially contains init method
+        k.fn = k.prototype = {};
+    	k.fn.init = function (selector, context){
+            if (!selector)
+            {
+                return this;
+            }
+        };
+
+    	// Give the init function the 'k' prototype for later instantiation
+        k.fn.init.prototype = k.fn;
+    
+        k.fn.fn1 = function(){
+            console.log("fn1");
+        };
+
+        k.fn.fn2 = function(){
+            console.log("fn2");
+        };
+
+    	// Return 'k' to the global object
+    	return k;
+    })();
+
+
+    /*
+       old jQuery 1.1 version init like this
+     
+     */
+    var oldQuery = (function(){
+        var k = function(){
+            if(this === window){
+                return new k();
+            } 
+        }
+
+    	//Define k’s fn prototype, specially contains init method
+        k.fn = k.prototype = {};
+
+        k.fn.fn1 = function(){
+            console.log("fn1");
+        };
+
+        k.fn.fn2 = function(){
+            console.log("fn2");
+        };
+
+        return k;
+    })();
+
+    /*
+       Demo
+     */
+    var oldQueryIns1 = oldQuery();
+    var oldQueryIns2 = new oldQuery();   //Ins1 and Ins2 will be no difference
+
+    var myQueryWithInitIns1 = myQueryWithInit();
+    var myQueryWithoutInitIns1 = myQueryWithoutInit();
+
+    //plugin function : plugin will appear in all the entities that already created and those that will be created. Adding properties directly to the object, we implement the static properties.
+    myQueryWithInit.fn.fn3 = function(){
+        console.log("fn3");
+    };
+
+    myQueryWithoutInit.fn3 = function(){
+        console.log("fn3");
+    };
+    
+    var myQueryWithInitIns2 = myQueryWithInit();
+    var myQueryWithoutInitIns2 = myQueryWithoutInit();
+    
+    console.log("myQueryWithInitIns1.init === undefined : " + (myQueryWithInitIns1.init === undefined).toString());
+    console.log('myQueryWithoutInitIns1.init === undefined : ' + (myQueryWithoutInitIns1.init === undefined).toString());
+    console.log('myQueryWithInitIns1.fn3 === undefined : ' + (myQueryWithInitIns1.fn3 === undefined).toString());
+    console.log('myQueryWithoutInitIns1.fn3 === undefined : ' + (myQueryWithoutInitIns1.fn3 === undefined).toString());
+    console.log('myQueryWithInitIns2.fn3 === undefined : ' + (myQueryWithInitIns2.fn3 === undefined).toString());
+    console.log('myQueryWithoutInitIns2.fn3 === undefined : ' + (myQueryWithoutInitIns2.fn3 === undefined).toString());
+
+</script>

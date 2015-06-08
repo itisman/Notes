@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>JavaScript Garden</title>
+<link rel="stylesheet" type="text/css" href="./CSS/home.css">
+<style></style>
+</head>
+<body>
+    <H1>JavaScript Garden</H1>
+    <div id="container"></div>
+    <div id="footer">
+        <h3> Document Information </h3>
+        <ul>
+            <li>
+                Date: 2015/05/26
+            </li>
+            <li>
+                Reference: 
+                <ul>
+                    <li><a target="_blank" href="http://bonsaiden.github.io/JavaScript-Garden/zh/">JavaScript Garden</a></li>
+                    <li><a target="_blank" href="http://dorey.github.io/JavaScript-Equality-Table/">JavaScript Equality Table</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>
+<script src="./LIB/jquery/jquery-2.1.3.js"></script>
+<script src="./LIB/home.js"></script>
+<script type="text/javascript">
+   /* 
+      Summary 
+      1. Everything is object except null and undefined. Even number is an object.
+      2. Primitives will simply get ignored when assigned as prototype.
+      3. JavaScript would not protect the property name hasOwnProperty.
+      4. for in loop would not iterate over any properties that have enumerable attribute set as false. such as length in array.
+      5. this cannot be used to refer to the object inside of an object literal.
+      6. arguments object is not an array. it's not inherit from Array but Object.
+      7. if constructor do not explicit has return statement. it will implicitly returns the value of this.
+      8. both var and function statements will be moved to the top of their enclosing scope.
+      9. typeof can only be used to check whether variable was actually declared or not. we can use Object.prototype.toString.call(...) to view the type.
+      10. instanceof should only be used when dealing with custom made objects.     
+      11. undefined can be easily overwritten.
+    */
+
+    /*  
+        Object
+     */
+    (function(){
+        try{
+            //Everything is object except null and undefined.
+            false.toString(); // 'false'
+            [1, 2, 3].toString(); // '1,2,3'
+            
+            function Foo(){}
+            Foo.bar = 1;
+            Foo.bar; // 1
+
+            //A common misconception is that number literals cannot be used as objects. That is because a flaw in JavaScript's parser tries to parse the dot notation on a number as a floating point literal.
+            //2.toString(); // raises SyntaxError
+            2.0.toString();
+            2..toString(); // the second point is correctly recognized
+            2 .toString(); // note the space left to the dot
+            (2).toString(); // 2 is evaluated first
+
+            //the only difference being that the square bracket notation allows for dynamic setting of properties and the use of property names that would otherwise lead to a syntax error.
+            var foo = {name: 'kitten'}
+            foo.name; // kitten
+            foo['name']; // kitten
+            
+            var get = 'name';   //get is the key word of JavaScript
+            foo[get]; // kitten
+            
+            //foo.1234; // SyntaxError
+            foo['1234']; // works
+
+            //The only way to remove a property from an object is to use the delete operator; setting the property to undefined or null only removes the value associated with the property, but not the key.
+            var obj = {
+                bar: 1,
+                foo: 2,
+                baz: 3
+            };
+            obj.bar = undefined;
+            obj.foo = null;
+            delete obj.baz;
+            
+            for(var i in obj) {
+                if (obj.hasOwnProperty(i)) {
+                    console.log(i, '' + obj[i]);
+                }
+            }
+
+            //This error arises from the fact that delete is a keyword.
+            var test = {
+                'case': 'I am a keyword so I must be notated as a string',
+                //delete: 'I am a keyword too so me' //SyntaxError
+            };
+        }catch(e){
+            console.error(e.message);        
+        }
+    }());
+
+    /* Prototype */
+    (function(){
+        try{
+            function Foo() {
+                this.value = 42;
+            }
+
+            //primitives will simply get ignored when assigned as a prototype.
+            Foo.prototype = 1; // no effect
+            Foo.prototype = {
+                method: function() {}
+            };
+            
+            function Bar() {
+                this.value2 = 43; 
+            }
+            
+            // Set Bar's prototype to a new instance of Foo
+            // Note: 
+            // Simply using Bar.prototype = Foo.prototype will result in both objects sharing the same prototype. Therefore, changes to either object's prototype will affect the prototype of the other as well, which in most cases is not the desired effect.
+            // Do not use Bar.prototype = Foo, since it will not point to the prototype of Foo but rather to the function object Foo. So the prototype chain will go over Function.prototype and not Foo.prototype; therefore, method will not be on the prototype chain.
+            Bar.prototype = new Foo();
+            Bar.prototype.foo = 'Hello World';
+            
+            // Make sure to list Bar as the actual constructor
+            Bar.prototype.constructor = Bar;
+
+            // create a new bar instance
+            var test = new Bar();  
+            var test1 = new Bar();
+            // The resulting prototype chain
+            //test [Instance of Bar]
+            //    Bar.prototype [Instance of Foo] 
+            //        { foo: 'Hello World' }
+            //        Foo.prototype
+            //            {method: ...};
+            //            Object.prototype
+            //                {toString: ...  etc. };
+            
+            test.value = 52;
+            test.value2 = 53;
+            console.log(test.value);
+            console.log(test.value2);
+            console.log(test1.value);
+            console.log(test1.value2);
+
+            var test2 = new Bar();
+            console.log(test2.value);
+            console.log(test2.value2);
+
+            //JavaScript does not protect the property name hasOwnProperty
+            var foo = {
+                hasOwnProperty: function() {
+                    return false;
+                },
+                bar: 'Here be dragons'
+            };
+            
+            foo.hasOwnProperty('bar'); // always returns false
+            
+            //Use another Object's hasOwnProperty and call it with 'this' set to foo
+            ({}).hasOwnProperty.call(foo, 'bar'); // true
+
+            //Note: The for in loop will not iterate over any properties that have their enumerable attribute set to false; for example, the length property of an array. 
+            Object.prototype.moo = 1;
+            for(var i in foo) {
+                if (({}).hasOwnProperty.call(foo, i)) {
+                    console.log(i);
+                }
+            }
+        }catch(e){
+            console.error(e.message);        
+        }
+    }());   
+
+    /*  
+        Functions
+     */
+    (function(){
+        try{
+            //The function Declaration
+            fn1(); 
+            function fn1(){};
+
+            //The function Expression
+            fn2; //undefined
+            //fn2(); //TypeError
+            var fn2 = function(){};
+
+            //Assignment of named functions.
+            //bar is not available in the outer scope, since the function only gets assigned to foo; however, inside of bar, it is available. This is due to how name resolution in JavaScript works, the name of the function is always made available in the local scope of the function itself.
+            var fn3 = function bar(){
+                bar();
+            }
+            //fn(); //ReferenceError
+        }catch(e){
+            console.error(e.message);        
+        }
+    }());
+
+    /* 
+       This
+       There are exactly five different ways in which the value of this can be bound in the language.
+     */
+    (function(){
+        try{
+            function con(value){
+                this.value = value;
+                console.log(this);
+            };
+            function fn(a, b, c){
+                console.log(this);
+            };
+            var demoData = {
+                name : 'demoData',
+                fn1 : function(){
+                    console.log(this);
+                }
+            }
+            //1. The Global Scope
+            //ES5 Note: In strict mode, the global case no longer exists. this will instead have the value of undefined in that case.
+            console.log(this);
+
+            //2. Calling a Function
+            //this will again refer to the global object.
+            fn();  
+
+            //3. Calling a Method
+            //this will refer to demoData.
+            demoData.fn1();
+
+            //4. Calling a Constructor
+            //A function call that is preceded by the new keyword acts as a constructor. Inside the function, this will refer to a newly created Object.
+            var ins1 = new con('a');
+
+            //5. Explicit Setting of this
+            var bar = {
+                name : 'bar'
+            };
+            fn.apply(bar, [1, 2, 3]); // array will expand to the below
+            fn.call(bar, 1, 2, 3); // results in a = 1, b = 2, c = 3
+
+            //Common Pitfalls
+            
+            //Note: this cannot be used to refer to the object inside of an Object literal. So var obj = {me: this} will not result in me referring to obj, since this only gets bound by one of the five listed cases.
+            var obj = {
+                me : this
+            }
+            console.log(obj.me); //window.
+
+            demoData.method = function() {
+                var that = this;
+                function test() {
+                    console.log(that);
+                    console.log(this);
+                }
+                test();
+            }
+            demoData.method();
+
+            //testMethod now acts like a plain function call; therefore, this inside it will no longer refer to someObject.
+            var testMethod = demoData.method;
+            testMethod();
+
+            //While the late binding of this might seem like a bad idea at first, in fact, it is what makes prototypal inheritance work.
+            //When method gets called on an instance of Bar, this will now refer to that very instance.
+            function Foo() {}
+            Foo.prototype.method = function() {
+                console.log(this);
+            };
+            
+            function Bar() {}
+            Bar.prototype = Foo.prototype;
+            
+            new Bar().method();
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }());   
+
+    /* 
+       Closures and References
+       With closures, scopes always keep access to the outer scope, in which they were defined. Since the only scoping that JavaScript has is function scope, all functions, by default, act as closures.
+     */
+    (function(){
+        try{
+            function Counter(start) {
+                var count = start;
+                return {
+                    increment: function() {
+                        count++;
+                    },
+            
+                    get: function() {
+                        return count;
+                    }
+                }
+            }
+            Counter.prototype.value = "value";
+            
+            var foo = Counter(4);
+            foo.increment();
+            console.log(foo.get()); // 5
+            foo.count = 1333;
+            foo.value = 'value_updated';
+            console.log(foo.get()); //5
+
+            //One often made mistake is to use closures inside of loops
+            for(var i = 0; i < 3; i++) {
+                setTimeout(function() {
+                    console.log(i);  
+                }, 500);
+            }
+
+            //Avoiding the Reference Problem
+            for(var i = 0; i < 3; i++) {
+                (function(e) {
+                    setTimeout(function() {
+                        console.log(e);  
+                    }, 1000);
+                })(i);
+            }
+
+            for(var i = 0; i < 3; i++) {
+                setTimeout(function(e) {
+                    console.log(e);  
+                }, 1500, i);
+            }
+
+            for(var i = 0; i < 3; i++) {
+                setTimeout(console.log.bind(console, i), 2000);
+            }
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }());   
+
+    /* 
+        arguments
+        The arguments object is not an Array. While it has some of the semantics of an array - namely the length property - it does not inherit from Array.prototype and is in fact an Object.Due to this, it is not possible to use standard array methods like push, pop or slice on arguments.
+     */
+    (function(){
+        try{
+            //recommended way of passing arguments from one function to another.
+            function bar(){
+                foo.apply(null, arguments);
+            }
+
+            function foo(a, b, c){
+                //a new Array containing all the elements of the arguments object.
+                var aArguments = Array.prototype.slice.call(arguments);
+
+                arguments[0] = 2;
+                console.log(a); // 2
+
+                b = 4;
+                console.log(arguments[1]); // 4
+
+                var d = c;
+                d = 9;
+                console.log(c); // 3
+            }
+            
+            function fooStrict(a, b, c){
+                'use strict';
+
+                a = 42;
+                console.log(a + "->" + arguments[0]);
+            }
+
+            fooStrict(17);
+
+
+            bar(1, 2, 3);
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }());   
+
+    /* Constructors */
+    (function(){
+        try{
+            function Person(name) {
+                this.name = name;
+
+                //If the function that was called has no explicit return statement, then it implicitly returns the value of this - the new object.
+                //return {...}
+            }
+            
+            Person.prototype.logName = function() {
+                console.log(this.name);
+            };
+            
+            //The above calls Person as constructor and sets the prototype of the newly created object to Person.prototype.
+            var sean = new Person();
+
+            //In case of an explicit return statement, the function returns the value specified by that statement, but only if the return value is an Object.
+            function Test1(){
+                return 1;
+            }
+            function Test2(){
+                return new Number(2);
+            }
+            console.log((new Test1()).constructor);
+            console.log((new Test2()).constructor);
+
+            
+            function Car() {
+                return 'ford';
+            }
+            var car1 = new Car(); // a new object, not 'ford'
+
+            function Car2() {
+                this.someValue = 2;
+            
+                return {
+                    name: 'Honda'
+                };
+            }
+            var car2 = new Car2();
+
+            function Pirate() {
+                this.hasEyePatch = true; // gets set on the global object!
+            }
+            var somePirate = Pirate(); // somePirate is undefined
+
+            //Factories
+            function Robot() {
+                var color = 'gray';
+                return {
+                    getColor: function() {
+                        return color;
+                    }
+                }
+            }
+            //there is no functional difference between using and not using the new keyword.
+            new Robot();
+            Robot();
+
+            function CarFactory() {
+                var car = {};
+                car.owner = 'nobody';
+            
+                var milesPerGallon = 2;
+            
+                car.setOwner = function(newOwner) {
+                    this.owner = newOwner;
+                }
+            
+                car.getMPG = function() {
+                    return milesPerGallon;
+                }
+            
+                return car;
+            }
+            
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }());   
+
+    /* 
+       Scopes and Namespaces 
+       it does not support block scope; hence, all that is left in the language is function scope.
+       The only source for local variables in JavaScript are function parameters and variables declared via the var statement.
+     */
+    (function(){
+        try{
+            // global scope
+            var foo = 1;
+            var bar = 2;
+            var i = 2;
+            
+
+            //While foo and i are local variables inside the scope of the function test, the assignment of bar will override the global variable with the same name.
+            function test(i) {
+                // local scope of the function test
+                i = 5;
+            
+                var foo = 3;
+                bar = 4;
+            }
+            test(10);
+
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }());   
+
+    /* 
+        Hoisting
+        JavaScript hoists declarations. This means that both var statements and function declarations will be moved to the top of their enclosing scope.
+     */
+    (function(){
+        try{
+            var someValue = 42;
+            
+            test({});
+            function test(data) {
+                if (false) {
+                    goo = 1;
+            
+                } else {
+                    var goo = 2;
+                }
+                for(var i = 0; i < 10; i++) {
+                    var e = data[i];
+                }
+            }
+            bar();
+            var bar = function() {};
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }());   
+
+    //The above code gets transformed before execution starts. JavaScript moves the var statements, as well as function declarations, to the top of the nearest surrounding scope.
+    (function(){
+        try{
+            // var statements got moved here
+            var bar, someValue; // default to 'undefined'
+            // the function declaration got moved up too
+            function test(data) {
+                var goo, i, e; // missing block scope moves these here
+                if (false) {
+                    goo = 1;
+            
+                } else {
+                    goo = 2;
+                }
+                for(i = 0; i < 10; i++) {
+                    e = data[i];
+                }
+            }
+
+            someValue = 42; // assignments are not affected by hoisting
+            test({});
+            
+            bar(); // fails with a TypeError since bar is still 'undefined'
+            bar = function() {};
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }());   
+
+    //A good sample to understand Hoisting
+    var myvar = 'my value';  
+    (function() {  
+        console.log(myvar); // undefined  
+        var myvar = 'local value';  
+    })();  
+    
+
+    /* 
+        Name Resolution Order
+
+        All scopes in JavaScript, including the global scope, have the special name this, defined in them, which refers to the current object.
+        
+        Function scopes also have the name arguments, defined in them, which contains the arguments that were passed to the function.
+        
+        For example, when trying to access a variable named foo inside the scope of a function, JavaScript will look up the name in the following order:
+            In case there is a var foo statement in the current scope, use that.
+            If one of the function parameters is named foo, use that.
+            If the function itself is called foo, use that.
+            Go to the next outer scope, and start with #1 again.
+        Note: Having a parameter called arguments will prevent the creation of the default arguments object.
+     */
+
+    /*
+       Array
+     */
+    (function(){
+        try{
+            //While the getter of the length property simply returns the number of elements that are contained in the array, the setter can be used to truncate the array.
+            var arr = [1, 2, 3, 4, 5, 6];
+            arr.length = 3;
+            console.log(arr); // [1, 2, 3]
+            
+            arr.length = 6;
+            arr.push(4);
+            console.log(arr); // [1, 2, 3, undefined, undefined, undefined, 4]
+           
+            var foo = [1, 2, 3];
+            console.log(5 in foo);
+            foo[5] = undefined;
+            console.log(5 in foo);
+
+            //Since the Array constructor is ambiguous in how it deals with its parameters, it is highly recommended to use the array literal - [] notation - when creating new arrays.
+            [1, 2, 3]; // Result: [1, 2, 3]
+            new Array(1, 2, 3); // Result: [1, 2, 3]
+            
+            [3]; // Result: [3]
+            new Array(3); // Result: []
+            new Array('3') // Result: ['3'] 
+
+            new Array(3, 4, 5); //Result: [3, 4, 5]
+            new Array(3); //Result: [], length is 3
+            
+            //only the length property of the new array will be set this way; the actual indexes of the array will not be initialized.
+            var arr = new Array(3);
+            arr[1]; // undefined
+            1 in arr; // false, the index was not set
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }());   
+
+    /* 
+       Types 
+       JavaScript features weak typing. This means that the equality operator coerces types in order to compare them.
+     */
+    (function(){
+        try{
+            //      ""           ==   "0"           // false
+            //      0            ==   ""            // true
+            //      0            ==   "0"           // true
+            //      false        ==   "false"       // false
+            //      false        ==   "0"           // true
+            //      false        ==   undefined     // false
+            //      false        ==   null          // false
+            //      null         ==   undefined     // true
+            //      " \t\r\n"    ==   0             // true
+            //      
+            //      ""           ===   "0"           // false
+            //      0            ===   ""            // false
+            //      0            ===   "0"           // false
+            //      false        ===   "false"       // false
+            //      false        ===   "0"           // false
+            //      false        ===   undefined     // false
+            //      false        ===   null          // false
+            //      null         ===   undefined     // false
+            //      " \t\r\n"    ===   0             // false
+
+            //      {} === {};                   // false
+            //      new String('foo') === 'foo'; // false
+            //      new Number(10) === 10;       // false
+            //      var foo = {};
+            //      foo === foo;                 // true
+
+            //Although instanceof still has limited uses, typeof really has only one practical use case, which does not happen to be checking the type of an object.
+            //      Value               Class      Type
+            //      -------------------------------------
+            //      "foo"               String     string
+            //      new String("foo")   String     object
+            //      1.2                 Number     number
+            //      new Number(1.2)     Number     object
+            //      true                Boolean    boolean
+            //      new Boolean(true)   Boolean    object
+            //      new Date()          Date       object
+            //      new Error()         Error      object
+            //      [1,2,3]             Array      object
+            //      new Array(1, 2, 3)  Array      object
+            //      new Function("")    Function   function
+            //      /abc/g              RegExp     object (function in Nitro/V8)
+            //      new RegExp("meow")  RegExp     object (function in Nitro/V8)
+            //      {}                  Object     object
+            //      new Object()        Object     object
+
+            //The above will check whether foo was actually declared or not; just referencing it would result in a ReferenceError. This is the only thing typeof is actually useful for.
+            typeof foo !== 'undefined'
+            //variable === undefined vs. typeof variable === 'undefined'
+            //  Global Variables: typeof variable === "undefined"
+            //  Local Variables: variable === undefined
+            //  Properties: object.prop === undefined
+            //For undeclared variables, typeof foo will return the string literal "undefined", whereas the identity check foo === undefined would trigger the error "foo is not defined". For local variables (which you know are declared somewhere), no such error would occur, hence the identity check.
+
+
+            //The specification gives exactly one way of accessing the [[Class]] value, with the use of Object.prototype.toString.
+            Object.prototype.toString.call([])    // "[object Array]"
+            Object.prototype.toString.call({})    // "[object Object]"
+            Object.prototype.toString.call(2)    // "[object Number]"
+
+            // IE8
+            Object.prototype.toString.call(null)    // "[object Object]"
+            Object.prototype.toString.call(undefined)    // "[object Object]"
+            
+            // Firefox 4
+            Object.prototype.toString.call(null)    // "[object Null]"
+            Object.prototype.toString.call(undefined)    // "[object Undefined]
+            
+            function is(type, obj) {
+                var clas = Object.prototype.toString.call(obj).slice(8, -1);
+                return obj !== undefined && obj !== null && clas === type;
+            }
+            
+            is('String', 'test'); // true
+            is('String', new String('test')); // true
+
+            //The instanceof operator should only be used when dealing with custom made objects that originate from the same JavaScript context. Just like the typeof operator, every other use of it should be avoided.
+            //Comparing custom objects
+            function Foo() {}
+            function Bar() {}
+            Bar.prototype = new Foo();
+            
+            new Bar() instanceof Bar; // true
+            new Bar() instanceof Foo; // true
+            
+            // This just sets Bar.prototype to the function object Foo,
+            // but not to an actual instance of Foo
+            Bar.prototype = Foo;
+            new Bar() instanceof Foo; // false
+
+            //Using instanceof with Native Types
+            new String('foo') instanceof String; // true
+            new String('foo') instanceof Object; // true
+            
+            'foo' instanceof String; // false
+            'foo' instanceof Object; // false
+
+            //Type casting : To avoid the issues above, use of the strict equal operator is highly recommended
+            // These are true
+            new Number(10) == 10; // Number object is converted
+                                  // to a number primitive via implicit call of
+                                  // Number.prototype.valueOf method
+            
+            10 == '10';           // Strings gets converted to Number
+            10 == '+10 ';         // More string madness
+            10 == '010';          // And more 
+            isNaN(null) == false; // null converts to 0
+                                  // which of course is not NaN
+            
+            // These are false
+            10 == 010;
+            10 == '-10';
+
+            //Constructors of Built-In Types
+            new Number(10) === 10;     // False, Object and Number
+            Number(10) === 10;         // True, Number and Number
+            new Number(10) + 0 === 10; // True, due to implicit conversion
+
+            //Casting to a String
+            '' + 10 === '10'; // true
+
+            //Casting to a Number
+            +'10' === 10; // true
+
+            //Casting to a Boolean
+            !!'foo';   // true
+            !!'';      // false
+            !!'0';     // true
+            !!'1';     // true
+            !!'-1'     // true
+            !!{};      // true
+            !!true;    // true
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }());   
+
+    /* 
+       Core 
+     */
+    (function(){
+        try{
+            //eval: eval should never be used. 
+            var number = 1;
+            function test() {
+                var number = 2;
+                eval('number = 3');
+                return number;
+            }
+            test(); // 3
+            number; // 1
+
+
+            var number = 1;
+            function test() {
+                var number = 2;
+
+                var copyOfEval = eval;
+                copyOfEval('number = 3');
+                //the above two lines of code are the same as
+                //1. window.number = 3;
+                //2. eval.call(window, 'number = 3');
+
+                return number;
+            }
+            test(); // 2
+            number; // 3
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }());   
+
+    /* 
+       undefined vs. null 
+       undefined
+       The language also defines a global variable that has the value of undefined; this variable is also called undefined. However, this variable is neither a constant nor a keyword of the language. This means that its value can be easily overwritten.
+       null
+       While undefined in the context of the JavaScript language is mostly used in the sense of a traditional null, the actual null (both a literal and a type) is more or less just another data type. It is used in some JavaScript internals (like declaring the end of the prototype chain by setting Foo.prototype = null), but in almost all cases, it can be replaced by undefined.
+     */
+
+    //To protect code against a possible overwritten undefined variable, a common technique used is to add an additional parameter to an anonymous wrapper that gets no argument passed to it.
+    var undefined = 123;
+    (function(something, foo, undefined){
+        try{
+            console.log("Code snippet2");
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }('hello world', 42));   
+
+    //Another way to achieve the same effect would be to use a declaration inside the wrapper. The only difference here is that this version results in 4 more bytes being used in case it is minified, and there is no other var statement inside the anonymous wrapper.
+    (function(){
+        try{
+            var undefined;    
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }());   
+
+    /* 
+       Automatic Semicolon Insertion: never omit semicolons 
+     */
+    (function(){
+        try{
+            function test(){
+                return
+                {
+                    a: 'a'
+                }
+            }
+            
+            //After Automatic Semicolon Insertion
+            function test_auto(){
+                return;
+                {
+                    a: 'a'
+                };
+            }
+
+            test(); //undefined
+
+
+            //In case of a leading parenthesis, the parser will not insert a semicolon.
+            function log(s){
+                console.log(s);
+                return; 
+            }
+
+            log('testing!')
+            (options.list || []).forEach(function(i) {})
+            
+            //This code gets transformed into one line.
+            log('testing!')(options.list || []).forEach(function(i) {})
+
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }());   
+
+    /* 
+       Delete Operator 
+       In short, it's impossible to delete global variables, functions and some other stuff in JavaScript which have a DontDelete attribute set.
+     */
+    (function(x){
+        try{
+            // global variable:
+            var a = 1; // DontDelete is set
+            delete a; // false
+            console.log(a); // 1
+            
+            // normal function:
+            function f() {} // DontDelete is set
+            delete f; // false
+            typeof f; // "function"
+            
+            // reassigning doesn't help:
+            f = 1;
+            delete f; // false
+            f; // 1
+
+            // explicitly set property:
+            var obj = {x: 1};
+            obj.y = 2;
+            delete obj.x; // true
+            delete obj.y; // true
+            obj.x; // undefined
+            obj.y; // undefined
+
+            delete arguments; // false
+            typeof arguments; // "object"
+
+            delete x; // false
+            x; // 1
+
+            function f(){}
+            delete f.length; // false
+            typeof f.length; // "number"
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }(1));   
+
+    /* 
+       Other 
+     */
+    (function(){
+        try{
+            //setTimeout vs. setInterval
+            function Foo() {
+                this.value = 42;
+                this.method = function() {
+                    // this point to global variable
+                    console.log(this.value); //output: undefined
+                };
+                setTimeout(this.method, 500);
+            }
+            new Foo();
+
+            //Stacking Calls with setInterval
+            function foo1(){
+                // something that blocks for 1 second
+            }
+            setInterval(foo1, 100);
+
+            //Dealing with Possible Blocking Code
+            function foo2(){
+                // something that blocks for 1 second
+                setTimeout(foo2, 100);
+            }
+            foo2();
+
+            var id = setTimeout(foo2, 1000);
+            clearTimeout(id);
+
+            // clear "all" timeouts
+            for(var i = 1; i < 1000; i++) {
+                clearTimeout(i);
+            }
+            
+            // clear "all" timeouts
+            var biggestTimeoutId = setTimeout(function(){}, 1);
+            for(var i = 1; i <= biggestTimeoutId; i++) {
+                clearTimeout(i);
+            }
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }());   
+</script>
+    
+

@@ -249,3 +249,29 @@ A:  Type following command:
         ":150" (go to line 150);
     Press
         150gg/150G  (go to line 150);
+
+Q:  How to move the cursor to the end of word.
+A:  Press
+        e       (goes to the end of next word);
+        ge/be   (goes to the end of previous word);
+
+Q: How to beautify code use jsBeautify?
+A:  Type following command:
+        ":call JsBeautify()"    (beautify whole file as JS file);
+        ":call HtmlBeautify()"    (beautify whole file as HTML file);
+        ":call CSSBeautify()"    (beautify whole file as CSS file);
+        ":call JsBeautify(1, 10)"    (beautify line 1 to 10 as JS file);
+
+    Note:
+        Setup in start up setting in vim:
+            map <c-f> :call JsBeautify()<cr>
+            " or
+            autocmd FileType javascript noremap <buffer>  <c-f> :call JsBeautify()<cr>
+            " for html
+            autocmd FileType html noremap <buffer> <c-f> :call HtmlBeautify()<cr>
+            " for css or scss
+            autocmd FileType css noremap <buffer> <c-f> :call CSSBeautify()<cr>
+            " If you want to beautify only selected lines you should use functions RangeJsBeautify, RangeCSSBeautify, RangeHtmlBeautify.
+            autocmd FileType javascript vnoremap <buffer>  <c-f> :call RangeJsBeautify()<cr>
+            autocmd FileType html vnoremap <buffer> <c-f> :call RangeHtmlBeautify()<cr>
+            autocmd FileType css vnoremap <buffer> <c-f> :call RangeCSSBeautify()<cr>

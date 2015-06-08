@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Array left join, outer join, inner join</title>
+<link rel="stylesheet" type="text/css" href="./CSS/home.css">
+<style></style>
+</head>
+<body>
+    <H1>Array left join, outer join, inner join</H1>
+    <div id="container"></div>
+    <div id="footer">
+        <h3> Document Information </h3>
+        <ul>
+            <li>
+                Date: 2015/05/06
+            </li>
+            <li>
+                Reference: 
+                <ul>
+                    <li><a target="_blank" href="http://stackoverflow.com/questions/406294/left-join-and-left-outer-join-in-sql-server">stackoverflow</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>
+<script src="./LIB/jquery/jquery-2.1.3.js"></script>
+<script src="./LIB/home.js"></script>
+<script type="text/javascript">
+    (function() {
+        var src = [{
+            name: "a"
+        }, {
+            name: "b"
+        }, {
+            name: "c"
+        }, {
+            name: "d"
+        }];
+        var tgt = [{
+            name: "b"
+        }, {
+            name: "c"
+        }, {
+            name: "d"
+        }, {
+            name: "e"
+        }, {
+            name: "f"
+        }];
+    
+        var src2 = ["a", "b", "c"];
+        var tgt2 = ["b", "c", "d"];
+    
+        function arrayInnerJoin(sourceArray, targetArray, keyword) {
+            var inner = [];
+            if (keyword) {
+                inner = sourceArray.filter(function(i) {
+                    return targetArray.some(function(j) {
+                        return j[keyword] === i[keyword];
+                    });
+                });
+            } else {
+                inner = sourceArray.filter(function(i) {
+                    return targetArray.indexOf(i) >= 0;
+                });
+            }
+    
+            return inner;
+        };
+    
+        function arrayLeftOnly(sourceArray, targetArray, keyword) {
+            var left = [];
+            if (keyword) {
+                left = sourceArray.filter(function(i) {
+                    return targetArray.every(function(j) {
+                        return j[keyword] !== i[keyword];
+                    });
+                });
+            } else {
+                left = sourceArray.filter(function(i) {
+                    return targetArray.indexOf(i) < 0;
+                });
+            }
+    
+            return left;
+        };
+    
+        function arrayOuterJoin(sourceArray, targetArray, keyword) {
+            var outer = arrayLeftOnly(targetArray, sourceArray, keyword);
+            return sourceArray.concat(outer);
+        };
+    
+        var inner = arrayInnerJoin(src, tgt, "name");
+        var left = arrayLeftOnly(src, tgt, "name");
+        var outer = arrayOuterJoin(src, tgt, "name");
+    
+        var inner2 = arrayInnerJoin(src2, tgt2);
+        var left2 = arrayLeftOnly(src2, tgt2);
+        var outer2 = arrayOuterJoin(src2, tgt2);
+    
+        console.log(inner.length);
+        console.log(left.length);
+        console.log(outer.length);
+    
+        console.log(inner2.length);
+        console.log(left2.length);
+        console.log(outer2.length);
+    })();
+</script>

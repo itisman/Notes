@@ -1,0 +1,1492 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>javascript style guide</title>
+<link rel="stylesheet" type="text/css" href="./CSS/home.css">
+<style></style>
+</head>
+<body>
+    <H1>javascript style guide</H1>
+    <div id="container"></div>
+    <div id="footer">
+        <h3> Document Information </h3>
+        <ul>
+            <li>
+                Date: 2015/04/10
+            </li>
+            <li>
+                Reference: 
+                <ul>
+                    <li><a target="_blank" href="https://github.com/airbnb/javascript#chat-with-us-about-javascript">chat with us about javascript</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>
+<script src="./LIB/jquery/jquery-2.1.3.js"></script>
+<script src="./LIB/home.js"></script>
+<script type="text/javascript">
+    /*  Type
+
+        Primitives: When you access a primitive type you work directly on its value.
+            string
+            number
+            boolean
+            null
+            undefined
+        Complex: When you access a complex type you work on a reference to its value.
+            object
+            array
+            function
+     */
+    (function(){
+        try{
+            var foo = 1;
+            var bar = foo;
+            bar = 9;
+            console.log(foo, bar); // => 1, 9
+
+            var foo2 = [1, 2];
+            var bar2 = foo2;
+            bar2[0] = 9;
+            console.log(foo2[0], bar2[0]); // => 9, 9
+        }catch(e){
+            console.error(e.message);        
+        }
+    }());
+
+    /* 
+        Objects
+
+        Use the literal syntax for object creation.
+        Don't use reserved words as keys. It won't work in IE8
+        Use readable synonyms in place of reserved words.
+     */
+    (function(){
+        try{
+            //Use the literal syntax for object creation.
+            // bad
+            var item = new Object();
+            
+            // good
+            var item = {};
+
+
+            //Don't use reserved words as keys. It won't work in IE8. 
+            // bad
+            var superman = {
+              default: { clark: 'kent' },
+              private: true
+            };
+            
+            // good
+            var superman = {
+              defaults: { clark: 'kent' },
+              hidden: true
+            };
+
+
+            //Use readable synonyms in place of reserved words.
+            // bad
+            var superman = {
+              class: 'alien'
+            };
+            
+            // bad
+            var superman = {
+              klass: 'alien'
+            };
+            
+            // good
+            var superman = {
+              type: 'alien'
+            };
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }()); 
+
+    /* 
+        Arrays
+
+        Use the literal syntax for array creation.
+        Use Array#push instead of direct assignment to add items to an array.
+        When you need to copy an array use Array#slice.
+        To convert an array-like object to an array, use Array#slice.
+     */
+    (function(){
+        try{
+            //Use the literal syntax for array creation.
+            // bad
+            var items = new Array();
+            
+            // good
+            var items = [];
+
+            //Use Array#push instead of direct assignment to add items to an array.
+            var someStack = [];
+            // bad
+            someStack[someStack.length] = 'abracadabra';
+            
+            // good
+            someStack.push('abracadabra');
+
+
+            //When you need to copy an array use Array#slice. 
+            var len = items.length;
+            var itemsCopy = [];
+            var i;
+            
+            // bad
+            for (i = 0; i < len; i++) {
+              itemsCopy[i] = items[i];
+            }
+            
+            // good
+            itemsCopy = items.slice();
+
+
+            //To convert an array-like object to an array, use Array#slice.
+            function trigger() {
+              var args = Array.prototype.slice.call(arguments);
+              //...
+            }
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }()); 
+
+    /* 
+        Strings
+
+        Use single quotes '' for strings.
+        Strings longer than 80 characters should be written across multiple lines using string concatenation.
+        When programmatically building up a string, use Array#join instead of string concatenation. Mostly for IE
+     */
+    (function(){
+        try{
+            //Use single quotes '' for strings.
+            // bad
+            var name = "Bob Parr";
+            
+            // good
+            var name = 'Bob Parr';
+            
+            // bad
+            var fullName = "Bob " + this.lastName;
+            
+            // good
+            var fullName = 'Bob ' + this.lastName;
+
+
+            //Strings longer than 80 characters should be written across multiple lines using string concatenation.
+            //Note: If overused, long strings with concatenation could impact performance. 
+            // bad
+            var errorMessage = 'This is a super long error that was thrown because of Batman. When you stop to think about how Batman had anything to do with this, you would get nowhere fast.';
+            
+            // bad
+            var errorMessage = 'This is a super long error that was thrown because \
+            of Batman. When you stop to think about how Batman had anything to do \
+            with this, you would get nowhere \
+            fast.';
+            
+            // good
+            var errorMessage = 'This is a super long error that was thrown because ' +
+              'of Batman. When you stop to think about how Batman had anything to do ' +
+              'with this, you would get nowhere fast.';
+
+
+            //When programmatically building up a string, use Array#join instead of string concatenation. Mostly for IE.
+            var items;
+            var messages;
+            var length;
+            var i;
+            
+            messages = [{
+              state: 'success',
+              message: 'This one worked.'
+            }, {
+              state: 'success',
+              message: 'This one worked as well.'
+            }, {
+              state: 'error',
+              message: 'This one did not work.'
+            }];
+            
+            length = messages.length;
+            
+            // bad
+            function inbox1(messages) {
+              items = 'start: ';
+            
+              for (i = 0; i < length; i++) {
+                items += ' No.' + (i + 1)  + ': ' + messages[i].message;
+              }
+            
+              items += ' end.';
+              return items;
+            }
+            
+            // good
+            function inbox2(messages) {
+              items = [];
+            
+              for (i = 0; i < length; i++) {
+                items[i] = ' No.' + (i + 1)  + ': ' + messages[i].message;
+              }
+            
+              return 'start: ' + items.join('') + ' end.';
+            }
+
+            console.log(inbox1(messages));
+            console.log(inbox2(messages));
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }()); 
+
+    /* 
+        Functions
+
+        Never declare a function in a non-function block (if, while, etc). Assign the function to a variable instead. Browsers will allow you to do it, but they all interpret it differently, which is bad news bears.
+        ECMA-262 defines a block as a list of statements. A function declaration is not a statement.
+        Never name a parameter arguments. This will take precedence over the arguments object that is given to every function scope.
+     */
+    (function(){
+        try{
+            //Function expressions:
+            // anonymous function expression
+            var anonymous = function() {
+                return true;
+            };
+            
+            // named function expression
+            var named = function named() {
+                return true;
+            };
+            
+            // immediately-invoked function expression (IIFE)
+            (function() {
+                console.log('Welcome to the Internet. Please follow me.');
+            })();
+
+
+            //Never declare a function in a non-function block (if, while, etc). Assign the function to a variable instead. Browsers will allow you to do it, but they all interpret it differently, which is bad news bears.
+            //Note: ECMA-262 defines a block as a list of statements. A function declaration is not a statement. Read ECMA-262's note on this issue.
+            // bad
+            if (true) {
+                function test() {
+                    console.log('Nope.');
+                }
+            }
+            
+            // good
+            var test;
+            if (true) {
+                test = function test() {
+                  console.log('Yup.');
+                };
+            }
+
+
+            //Never name a parameter arguments. This will take precedence over the arguments object that is given to every function scope.
+            // bad
+            function nope(name, options, arguments) {
+              // ...stuff...
+            }
+            
+            // good
+            function yup(name, options, args) {
+              // ...stuff...
+            }
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }()); 
+
+    /* 
+        Properties
+        
+        Use dot notation when accessing properties.
+        Use subscript notation [] when accessing properties with a variable.
+
+     */
+    (function(){
+        try{
+            //Use dot notation when accessing properties.
+            var luke = {
+                jedi: true,
+                age: 28
+            };
+            
+            // bad
+            var isJedi = luke['jedi'];
+            
+            // good
+            var isJedi = luke.jedi;
+
+
+            //Use subscript notation [] when accessing properties with a variable.
+            var luke = {
+                jedi: true,
+                age: 28
+            };
+            
+            function getProp(prop) {
+                return luke[prop];
+            }
+            
+            var isJedi = getProp('jedi');
+            console.log("Code snippet2");
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }()); 
+
+    /* 
+        Variables
+
+        Always use var to declare variables. Not doing so will result in global variables. We want to avoid polluting the global namespace. Captain Planet warned us of that.
+        Use one var declaration per variable. It's easier to add new variable declarations this way, and you never have to worry about swapping out a ; for a , or introducing punctuation-only diffs.
+        Declare unassigned variables last. This is helpful when later on you might need to assign a variable depending on one of the previous assigned variables.
+        Assign variables at the top of their scope. This helps avoid issues with variable declaration and assignment hoisting related issues.
+     */
+    (function(){
+        try{
+            //Always use var to declare variables. Not doing so will result in global variables. We want to avoid polluting the global namespace. Captain Planet warned us of that.
+            function SuperPower(){
+            }
+            // bad
+            superPower = new SuperPower();
+            
+            // good
+            var superPower = new SuperPower();
+
+
+            //Use one var declaration per variable. It's easier to add new variable declarations this way, and you never have to worry about swapping out a ; for a , or introducing punctuation-only diffs.
+            function getItems(){
+                return 'a';
+            }
+            // bad
+            var items = getItems(),
+                goSportsTeam = true,
+                dragonball = 'z';
+            
+            // bad
+            // (compare to above, and try to spot the mistake)
+            var items = getItems(),
+                goSportsTeam = true;
+                dragonball = 'z';
+            
+            // good
+            var items = getItems();
+            var goSportsTeam = true;
+            var dragonball = 'z';
+
+
+
+            //Declare unassigned variables last. This is helpful when later on you might need to assign a variable depending on one of the previous assigned variables.
+            // bad
+            var i, len, dragonball,
+                items = getItems(),
+                goSportsTeam = true;
+            
+            // bad
+            var i;
+            var items = getItems();
+            var dragonball;
+            var goSportsTeam = true;
+            var len;
+            
+            // good
+            var items = getItems();
+            var goSportsTeam = true;
+            var dragonball;
+            var length;
+            var i;
+
+
+
+            //Assign variables at the top of their scope. This helps avoid issues with variable declaration and assignment hoisting related issues.
+            // bad
+            function a(){
+                test();
+                console.log('doing stuff..');
+            
+                //..other stuff..
+            
+                var name = getName();
+            
+                if (name === 'test') {
+                  return false;
+                }
+            
+                return name;
+            }
+            
+            // good
+            function d(){
+                var name = getName();
+            
+                test();
+                console.log('doing stuff..');
+            
+                //..other stuff..
+            
+                if (name === 'test') {
+                  return false;
+                }
+            
+                return name;
+            }
+            
+            // bad
+            function b(){
+                var name = getName();
+            
+                if (!arguments.length) {
+                  return false;
+                }
+            
+                return true;
+            }
+            
+            // good
+            function c(){
+                if (!arguments.length) {
+                  return false;
+                }
+            
+                var name = getName();
+            
+                return true;
+            }
+
+            console.log("Code snippet2");
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }()); 
+
+    /* 
+        Hoisting
+
+        Variable declarations get hoisted to the top of their scope, but their assignment does not.
+        Anonymous function expressions hoist their variable name, but not the function assignment.
+        Named function expressions hoist the variable name, not the function name or the function body.
+        Function declarations hoist their name and the function body.
+     
+     */
+    (function(){
+        try{
+            // we know this wouldn't work (assuming there
+            // is no notDefined global variable)
+            function example() {
+                console.log(notDefined); // => throws a ReferenceError
+            }
+            
+            // creating a variable declaration after you
+            // reference the variable will work due to
+            // variable hoisting. Note: the assignment
+            // value of `true` is not hoisted.
+            function example() {
+                console.log(declaredButNotAssigned); // => undefined
+                var declaredButNotAssigned = true;
+            }
+            
+            // The interpreter is hoisting the variable
+            // declaration to the top of the scope,
+            // which means our example could be rewritten as:
+            function example() {
+                var declaredButNotAssigned;
+                console.log(declaredButNotAssigned); // => undefined
+                declaredButNotAssigned = true;
+            }
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }()); 
+
+    (function(){
+        try{
+
+            function example() {
+                console.log(anonymous); // => undefined
+            
+                anonymous(); // => TypeError anonymous is not a function
+            
+                var anonymous = function() {
+                    console.log('anonymous function expression');
+                };
+            }
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }()); 
+
+    (function(){
+        try{
+
+            function example() {
+              console.log(named); // => undefined
+            
+              named(); // => TypeError named is not a function
+            
+              superPower(); // => ReferenceError superPower is not defined
+            
+              var named = function superPower() {
+                console.log('Flying');
+              };
+            }
+            
+            // the same is true when the function name
+            // is the same as the variable name.
+            function example() {
+              console.log(named); // => undefined
+            
+              named(); // => TypeError named is not a function
+            
+              var named = function named() {
+                console.log('named');
+              }
+            }
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }()); 
+
+    (function(){
+        try{
+            function example() {
+              superPower(); // => Flying
+            
+              function superPower() {
+                console.log('Flying');
+              }
+            }
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }()); 
+
+    /* 
+        Comparison Operators & Equality
+
+        Use === and !== over == and !=.
+        Comparison operators are evaluated using coercion with the ToBoolean method and always follow these simple rules:
+            Objects evaluate to true
+            Undefined evaluates to false
+            Null evaluates to false
+            Booleans evaluate to the value of the boolean
+            Numbers evaluate to false if +0, -0, or NaN, otherwise true
+            Strings evaluate to false if an empty string '', otherwise true
+        Use shortcuts.
+     */
+    (function(){
+        try{
+            var name = 'a';
+            var collection = ['a','b','c'];
+
+            if ([0]) {
+              // true
+              // An array is an object, objects evaluate to true
+            }
+
+            // bad
+            if (name !== '') {
+              // ...stuff...
+            }
+            
+            // good
+            if (name) {
+              // ...stuff...
+            }
+            
+            // bad
+            if (collection.length > 0) {
+              // ...stuff...
+            }
+            
+            // good
+            if (collection.length) {
+              // ...stuff...
+            }
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }()); 
+
+    /* 
+        Blocks
+
+        Use braces with all multi-line blocks.
+        If you're using multi-line blocks with if and else, put else on the same line as your if block's closing brace.
+     */
+    (function(){
+        try{
+            var test = true;
+            // bad
+            if (test)
+              return false;
+            
+            // good
+            if (test) return false;
+            
+            // good
+            if (test) {
+              return false;
+            }
+            
+            // bad
+            function a() { return false; }
+            
+            // good
+            function b() {
+              return false;
+            }
+
+
+            // bad
+            if (test) {
+                //do something
+            }
+            else {
+                //do something
+            }
+            
+            // good
+            if (test) {
+                //do something
+            } else {
+                //do something
+            }
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }()); 
+
+    /* 
+        Comments 
+
+        Use \/** ... *\/ for multi-line comments. Include a description, specify types and values for all parameters and return values.
+        Use // for single line comments. Place single line comments on a newline above the subject of the comment. Put an empty line before the comment.
+        Prefixing your comments with FIXME or TODO helps other developers quickly understand if you're pointing out a problem that needs to be revisited, or if you're suggesting a solution to the problem that needs to be implemented. These are different than regular comments because they are actionable. The actions are FIXME -- need to figure this out or TODO -- need to implement.
+     */
+    (function(){
+        try{
+            // bad
+            var active = true;  // is current tab
+            
+            // good
+            // is current tab
+            var active = true;
+            
+            // bad
+            function getType() {
+              console.log('fetching type...');
+              // set the default type to 'no type'
+              var type = this._type || 'no type';
+            
+              return type;
+            }
+            
+            // good
+            function getType() {
+              console.log('fetching type...');
+            
+              // set the default type to 'no type'
+              var type = this._type || 'no type';
+            
+              return type;
+            } 
+
+            function Calculator() {
+              // FIXME: shouldn't use a global here
+              total = 0;
+            
+              return this;
+            }
+            
+            function Calculator() {
+            
+              // TODO: total should be configurable by an options param
+              this.total = 0;
+            
+              return this;
+            }
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }()); 
+
+    /* 
+        Whitespace
+
+        Use soft tabs set to 2 spaces.
+        Place 1 space before the leading brace.
+        Place 1 space before the opening parenthesis in control statements (if, while etc.). Place no space before the argument list in function calls and declarations.
+        Set off operators with spaces.
+        End files with a single newline character.
+        Use indentation when making long method chains. Use a leading dot, which emphasizes that the line is a method call, not a new statement.
+        Leave a blank line after blocks and before the next statement
+     */
+
+    /*
+        Commas
+
+        Leading commas: Nope.
+        Additional trailing comma: Nope. This can cause problems with IE6/7 and IE9 if it's in quirksmode. Also, in some implementations of ES3 would add length to an array if it had an additional trailing comma. 
+    
+     */
+    (function(){
+        try{
+            var once, upon, aTime;
+            // bad
+            var story = [
+                once
+              , upon
+              , aTime
+            ];
+            
+            // good
+            var story = [
+              once,
+              upon,
+              aTime
+            ];
+            
+            // bad
+            var hero = {
+                firstName: 'Bob'
+              , lastName: 'Parr'
+              , heroName: 'Mr. Incredible'
+              , superPower: 'strength'
+            };
+            
+            // good
+            var hero = {
+              firstName: 'Bob',
+              lastName: 'Parr',
+              heroName: 'Mr. Incredible',
+              superPower: 'strength'
+            };
+
+            // bad
+            var hero = {
+              firstName: 'Kevin',
+              lastName: 'Flynn',
+            };
+
+            var heroes = [
+              'Batman',
+              'Superman',
+            ];
+
+            // good
+            var hero = {
+              firstName: 'Kevin',
+              lastName: 'Flynn'
+            };
+
+            var heroes = [
+              'Batman',
+              'Superman'
+            ];
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }()); 
+
+    /* 
+        Semicolons
+     */
+    ;(function(){
+        try{
+            // good (guards against the function becoming an argument when two files with IIFEs are concatenated)
+            //  E.g.
+            //  ;(function() {
+            //    var name = 'Skywalker';
+            //    return name;
+            //  })();
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }()); 
+
+    /* 
+        Type Casting & Coercion 
+     
+        Perform type coercion at the beginning of the statement.
+        Use parseInt for Numbers and always with a radix for type casting.
+
+     */
+    (function(){
+        try{
+            this.reviewScore = 9;
+            //Strings:
+            // bad
+            var totalScore = this.reviewScore + '';
+            
+            // good
+            var totalScore = '' + this.reviewScore;
+            
+            // bad
+            var totalScore = '' + this.reviewScore + ' total score';
+            
+            // good
+            var totalScore = this.reviewScore + ' total score';
+
+
+            //Use parseInt for Numbers and always with a radix for type casting.
+            var inputValue = '4';
+            // bad
+            var val = new Number(inputValue);
+            
+            // bad
+            var val = +inputValue;
+            
+            // bad
+            var val = inputValue >> 0;
+            
+            // bad
+            var val = parseInt(inputValue);
+            
+            // good
+            var val = Number(inputValue);
+            
+            // good
+            var val = parseInt(inputValue, 10);
+
+
+            //If for whatever reason you are doing something wild and parseInt is your bottleneck and need to use Bitshift for performance reasons, leave a comment explaining why and what you're doing.
+            // good
+            //parseInt was the reason my code was slow.
+            //Bitshifting the String to coerce it to a
+            //Number made it a lot faster.
+            var val = inputValue >> 0;
+
+
+            //Note: Be careful when using bitshift operations. Numbers are represented as 64-bit values, but Bitshift operations always return a 32-bit integer (source). Bitshift can lead to unexpected behavior for integer values larger than 32 bits. Discussion. Largest signed 32-bit Int is 2,147,483,647:
+            2147483647 >> 0 //=> 2147483647
+            2147483648 >> 0 //=> -2147483648
+            2147483649 >> 0 //=> -2147483647
+
+
+            //Booleans:
+            var age = 0;
+            
+            // bad
+            var hasAge = new Boolean(age);
+            
+            // good
+            var hasAge = Boolean(age);
+            
+            // good
+            var hasAge = !!age;
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }()); 
+
+    /* 
+        Naming Conventions
+
+        Avoid single letter names. Be descriptive with your naming.
+        Use camelCase when naming objects, functions, and instances.
+        Use PascalCase when naming constructors or classes.
+        Use a leading underscore _ when naming private properties.
+        When saving a reference to this use _this.
+        Name your functions. This is helpful for stack traces.
+        If your file exports a single class, your filename should be exactly the name of the class.
+     */
+    (function(){
+        try{
+            // bad
+            function q() {
+              // ...stuff...
+            }
+            
+            // good
+            function query() {
+              // ..stuff..
+            }
+            
+            // bad
+            var OBJEcttsssss = {};
+            var this_is_my_object = {};
+            function c() {}
+            var u = new user({
+              name: 'Bob Parr'
+            });
+            
+            // good
+            var thisIsMyObject = {};
+            function thisIsMyFunction() {}
+            var userIns = new User({
+              name: 'Bob Parr'
+            });
+            
+            // bad
+            function user(options) {
+              this.name = options.name;
+            }
+            
+            var bad = new user({
+              name: 'nope'
+            });
+            
+            // good
+            function User(options) {
+              this.name = options.name;
+            }
+            
+            var good = new User({
+              name: 'yup'
+            });
+            
+            // bad
+            this.__firstName__ = 'Panda';
+            this.firstName_ = 'Panda';
+            
+            // good
+            this._firstName = 'Panda';
+            
+            // bad
+            function fn3() {
+              var self = this;
+              return function() {
+                console.log(self);
+              };
+            }
+            
+            // bad
+            function fn1() {
+              var that = this;
+              return function() {
+                console.log(that);
+              };
+            }
+            
+            // good
+            function fn2() {
+              var _this = this;
+              return function() {
+                console.log(_this);
+              };
+            }
+            
+            // bad
+            var log = function(msg) {
+              console.log(msg);
+            };
+            
+            // good
+            var log = function log(msg) {
+              console.log(msg);
+            };
+            console.log("Code snippet2");
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }()); 
+
+    /* 
+        Accessors
+
+        Accessor functions for properties are not required.
+        If you do make accessor functions use getVal() and setVal('hello').
+        If the property is a boolean, use isVal() or hasVal().
+        It's okay to create get() and set() functions, but be consistent.
+     */
+    (function(){
+        try{
+            var dragon = {
+                age : function(){},
+                getAge : function(){},
+                setAge : function(){}
+            };
+            // bad
+            dragon.age();
+            
+            // good
+            dragon.getAge();
+            
+            // bad
+            dragon.age(25);
+            
+            // good
+            dragon.setAge(25);
+
+            // bad
+            if (!dragon.age()) {
+              return false;
+            }
+            
+            // good
+            if (!dragon.hasAge()) {
+              return false;
+            }
+
+            function Jedi(options) {
+              options || (options = {});
+              var lightsaber = options.lightsaber || 'blue';
+              this.set('lightsaber', lightsaber);
+            }
+            
+            Jedi.prototype.set = function(key, val) {
+              this[key] = val;
+            };
+            
+            Jedi.prototype.get = function(key) {
+              return this[key];
+            };
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }()); 
+
+    /* 
+        Constructors
+
+        Assign methods to the prototype object, instead of overwriting the prototype with a new object. Overwriting the prototype makes inheritance impossible: by resetting the prototype you'll overwrite the base!
+        Methods can return this to help with method chaining.
+        It's okay to write a custom toString() method, just make sure it works successfully and causes no side effects.
+     
+     */
+    (function(){
+        try{
+            function Jedi() {
+              console.log('new jedi');
+            }
+            
+            // bad
+            Jedi.prototype = {
+              fight: function fight() {
+                console.log('fighting');
+              },
+            
+              block: function block() {
+                console.log('blocking');
+              }
+            };
+            
+            // good
+            Jedi.prototype.fight = function fight() {
+              console.log('fighting');
+            };
+            
+            Jedi.prototype.block = function block() {
+              console.log('blocking');
+            };
+            // bad
+            Jedi.prototype.jump = function() {
+              this.jumping = true;
+              return true;
+            };
+            
+            Jedi.prototype.setHeight = function(height) {
+              this.height = height;
+            };
+            
+            var luke = new Jedi();
+            luke.jump(); // => true
+            luke.setHeight(20); // => undefined
+            
+            // good
+            Jedi.prototype.jump = function() {
+              this.jumping = true;
+              return this;
+            };
+            
+            Jedi.prototype.setHeight = function(height) {
+              this.height = height;
+              return this;
+            };
+            
+            var luke = new Jedi();
+            
+            luke.jump()
+              .setHeight(20);
+            function Jedi(options) {
+              options || (options = {});
+              this.name = options.name || 'no name';
+            }
+            
+            Jedi.prototype.getName = function getName() {
+              return this.name;
+            };
+            
+            Jedi.prototype.toString = function toString() {
+              return 'Jedi - ' + this.getName();
+            };
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }()); 
+
+    /* 
+        Events
+     */
+    (function(){
+        try{
+            var listing = {
+                id : 'a'
+            }
+            //When attaching data payloads to events (whether DOM events or something more proprietary like Backbone events), pass a hash instead of a raw value. This allows a subsequent contributor to add more data to the event payload without finding and updating every handler for the event. For example, instead of:
+            // bad
+            $(this).trigger('listingUpdated', listing.id);
+            
+            
+            $(this).on('listingUpdated', function(e, listingId) {
+              // do something with listingId
+            });
+
+            //prefer:
+            // good
+            $(this).trigger('listingUpdated', { listingId : listing.id });
+            
+            
+            $(this).on('listingUpdated', function(e, data) {
+              // do something with data.listingId
+            });
+            console.log("Code snippet2");
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }()); 
+
+    /* 
+        Modules
+
+        The module should start with a !. This ensures that if a malformed module forgets to include a final semicolon there aren't errors in production when the scripts get concatenated. Explanation
+        The file should be named with camelCase, live in a folder with the same name, and match the name of the single export.
+        Add a method called noConflict() that sets the exported module to the previous version and returns this one.
+        Always declare 'use strict'; at the top of the module.
+     */
+    !(function(global){
+        try{
+            'use strict';
+
+            var previousFancyInput = global.FancyInput;
+
+            function FancyInput(options) {
+              this.options = options || {};
+            }
+
+            FancyInput.noConflict = function noConflict() {
+              global.FancyInput = previousFancyInput;
+              return FancyInput;
+            };
+
+            global.FancyInput = FancyInput;
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }(this)); 
+
+    /*  jQuery */
+    /*  ECMAScript 5 Compatibility */
+    /* 
+        Performance 
+
+        On Layout & Web Performance
+        String vs Array Concat
+        Try/Catch Cost In a Loop
+        Bang Function
+        jQuery Find vs Context, Selector
+        innerHTML vs textContent for script text
+        Long String Concatenation
+     */
+    (function(){
+        try{
+            console.log("Code snippet2");
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }()); 
+
+    /* Title 2 */
+    (function(){
+        try{
+            console.log("Code snippet2");
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }()); 
+
+    /* Title 2 */
+    (function(){
+        try{
+            console.log("Code snippet2");
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }()); 
+
+    /* Title 2 */
+    (function(){
+        try{
+            console.log("Code snippet2");
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }()); 
+
+    /* Title 2 */
+    (function(){
+        try{
+            console.log("Code snippet2");
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }()); 
+
+    /* Title 2 */
+    (function(){
+        try{
+            console.log("Code snippet2");
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }()); 
+
+    /* Title 2 */
+    (function(){
+        try{
+            console.log("Code snippet2");
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }()); 
+
+    /* Title 2 */
+    (function(){
+        try{
+            console.log("Code snippet2");
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }()); 
+
+    /* Title 2 */
+    (function(){
+        try{
+            console.log("Code snippet2");
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }()); 
+
+    /* Title 2 */
+    (function(){
+        try{
+            console.log("Code snippet2");
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }()); 
+
+    /* Title 2 */
+    (function(){
+        try{
+            console.log("Code snippet2");
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }()); 
+
+    /* Title 2 */
+    (function(){
+        try{
+            console.log("Code snippet2");
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }()); 
+
+    /* Title 2 */
+    (function(){
+        try{
+            console.log("Code snippet2");
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }()); 
+
+    /* Title 2 */
+    (function(){
+        try{
+            console.log("Code snippet2");
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }()); 
+
+    /* Title 2 */
+    (function(){
+        try{
+            console.log("Code snippet2");
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }()); 
+
+    /* Title 2 */
+    (function(){
+        try{
+            console.log("Code snippet2");
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }()); 
+
+    /* Title 2 */
+    (function(){
+        try{
+            console.log("Code snippet2");
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }()); 
+
+    /* Title 2 */
+    (function(){
+        try{
+            console.log("Code snippet2");
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }()); 
+
+    /* Title 2 */
+    (function(){
+        try{
+            console.log("Code snippet2");
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }()); 
+
+    /* Title 2 */
+    (function(){
+        try{
+            console.log("Code snippet2");
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }()); 
+
+    /* Title 2 */
+    (function(){
+        try{
+            console.log("Code snippet2");
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }()); 
+
+    /* Title 2 */
+    (function(){
+        try{
+            console.log("Code snippet2");
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }()); 
+
+    /* Title 2 */
+    (function(){
+        try{
+            console.log("Code snippet2");
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }()); 
+
+    /* Title 2 */
+    (function(){
+        try{
+            console.log("Code snippet2");
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }()); 
+
+    /* Title 2 */
+    (function(){
+        try{
+            console.log("Code snippet2");
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }()); 
+
+    /* Title 2 */
+    (function(){
+        try{
+            console.log("Code snippet2");
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }()); 
+
+    /* Title 2 */
+    (function(){
+        try{
+            console.log("Code snippet2");
+        }catch(e){
+            console.error(e.message);        
+        }
+        
+    }()); 
+</script>
+    
+

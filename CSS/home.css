@@ -13,14 +13,19 @@
 }
 
 .content {
-    font-family: Georgia, Times New Roman, Serif;
+    /* font-family: Georgia, Times New Roman, Serif; */
     font-size: 15px;
     line-height: 1.5;
 }
 
-.content:first-line {
-    font-weight: bold;
+pre.content{
+    white-space: pre-wrap;       /* css-3 */
+    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */ 
 }
+
 #container, h1, #footer{
     width: 65%;
     min-width: 640px;
@@ -33,7 +38,23 @@
     max-width: 100%;
 }
 
-h1 {
+h1,
+h2,
+h3,
+h4,
+caption,
+.content:first-line {
+    font-family: "Essays 1743", Palatino, "Palatino Linotype", "Book Antiqua", Georgia, "Times New Roman", serif;
+    font-weight: normal;
+    text-transform: uppercase;
+    text-shadow: 0 0 1px #667;
+}
+
+.content:first-line{
+    font-size:20px;
+}
+
+h1{
     text-align: center;
 }
 
@@ -46,9 +67,6 @@ h1 {
 
 #footer h3 {
     border-bottom: 1px solid gray;
-    font-size: 1.3em;
-    font-weight: bold;
-    color: #556677;
 }
 
 body {
