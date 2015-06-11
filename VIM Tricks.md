@@ -57,11 +57,11 @@
 
 > `:Hexplore!` / `:He!` does an :Explore with |:aboveleft|  horizontal splitting.
 
-> `:Vexplore` /`:Ve` does an :Explore with |:leftabove|  vertical splitting.
+> `:Vexplore` / `:Ve` does an :Explore with |:leftabove|  vertical splitting.
 
-> `:Vexplore!` /`:Ve!` does an :Explore with |:rightbelow| vertical splitting.
+> `:Vexplore!` / `:Ve!` does an :Explore with |:rightbelow| vertical splitting.
 
-> `:Texplore` /:Te` does a tabnew before generating the browser window
+> `:Texplore` / `:Te` does a tabnew before generating the browser window
 
 ####  How to split screen?
 ----
@@ -79,7 +79,7 @@
 
 ####  How to search and replace
 ----
-> http://vim.wikia.com/wiki/Search\_and\_replace
+> [Search and Replace](http://vim.wikia.com/wiki/Search\_and\_replace)
 
 ####  How to view as Tab
 ----
@@ -168,7 +168,7 @@
 
 > `:1,20s/^/\/\//gc`  insert // at the begining of line 1 to line 20 with confirm notice
 
-> http://vim.wikia.com/wiki/Search\_and\_replace
+> [Search and Replace](http://vim.wikia.com/wiki/Search\_and\_replace)
 
 ####  How can I swap positions of two open files (in splits) in vim?
 ----
@@ -252,7 +252,7 @@
 
 > `5ch`       (cut 5 charactor before cursor),
 
-> `ci[`/`ci{` (cut all the charactors between \[ \], it will also works for \{\}, \<\>, \(\), "", ``,\`\`)
+> `ci[`/`ci{` (cut all the charactors between \[ \], it will also works for \{\}, \<\>, \(\), "", '',\`\`)
 
 > `cit`       (cut all the charactors between HTML/XML tags)
 
@@ -340,9 +340,9 @@
 
 > ----
 
-> http://vimcasts.org/episodes/how-to-fold/
+> [how to fold](http://vimcasts.org/episodes/how-to-fold)
 
-> http://vim.wikia.com/wiki/Folding
+> [Folding](http://vim.wikia.com/wiki/Folding)
 
 ####  How to copy inner word ?
 ----
@@ -355,15 +355,15 @@
 
 > `:set nospell`  to disable spell check
 
-> ]s`  Move to next misspelled word after the cursor.  A count before the command can be used to repeat.  `wrapscan` applies.
+> `]s`  Move to next misspelled word after the cursor.  A count before the command can be used to repeat.  *wrapscan* applies.
 
-> [s`  Like "]s" but search backwards, find the misspelled word before the cursor.  Finding suggestions for bad words:
+> `[s`  Like "]s" but search backwards, find the misspelled word before the cursor.  Finding suggestions for bad words:
 
-> z=`  For the word under/after the cursor, suggest correctly spelled words.  To add words to your own word list:
+> `z=`  For the word under/after the cursor, suggest correctly spelled words.  To add words to your own word list:
 
-> zg`  Add word under the cursor as a good word 
+> `zg`  Add word under the cursor as a good word 
 
-> zw`	Like `zg` but mark the word as a wrong (bad) word.  If the word already appears in *spellfile* it is turned into a comment line.  See |spellfile-cleanup| for getting rid of those.
+> `zw`	Like `zg` but mark the word as a wrong (bad) word.  If the word already appears in *spellfile* it is turned into a comment line.  See |spellfile-cleanup| for getting rid of those.
 
 ####  How to use ":HELP" for VIM?
 ----
@@ -387,11 +387,11 @@
 
 ####  How to keep the cursor in the middle of the screen?
 ----
-> zz`  cursor line will be inthe middle of the screen
+> `zz`  cursor line will be inthe middle of the screen
 
-> zt`  cursor line will be inthe top of the screen
+> `zt`  cursor line will be inthe top of the screen
 
-> zb`  cursor line will be inthe bottom of the screen
+> `zb`  cursor line will be inthe bottom of the screen
 
 ####  How to delete characters?
 ----
@@ -452,3 +452,5 @@
 > autocmd FileType html vnoremap <buffer> <c-f> :call RangeHtmlBeautify()<cr>
 > autocmd FileType css vnoremap <buffer> <c-f> :call RangeCSSBeautify()<cr>
 > ```
+
+
