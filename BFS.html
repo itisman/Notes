@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>BFS</title>
+<link rel="stylesheet" type="text/css" href="./CSS/home.css">
+<style></style>
+</head>
+<body>
+    <H1>BFS</H1>
+    <div id="container"></div>
+    <div id="footer">
+        <h3> Document Information </h3>
+        <ul>
+            <li>
+                Date: 2015/06/08
+            </li>
+            <li>
+                Reference: 
+                <ul>
+                    <li><a target="_blank" href="https://leetcode.com/problems/generate-parentheses/">generate parentheses</a></li>
+                    <li><a target="_blank" href="https://leetcode.com/discuss/11509/an-iterative-method">iterative method</a></li>
+                    <li><a target="_blank" href="https://leetcode.com/discuss/14436/concise-recursive-c-solution">concise recursive</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>
+<script src="./LIB/jquery/jquery-2.1.3.js"></script>
+<script src="./LIB/home.js"></script>
+<script type="text/javascript">
+    /* concise recursive */
+    (function() {
+            var generateParenthesis = function(n) {
+                var result = [];
+
+                function helper(s, leftpare_need, moreleft) {
+                    console.log(leftpare_need, moreleft);
+                    if (leftpare_need === 0 && moreleft === 0) {
+                        console.log(s);
+                        result.push(s);
+                        return;
+                    }
+                    if (leftpare_need > 0) {
+                        helper(s + "(", leftpare_need - 1, moreleft + 1);
+                    }
+
+                    if (moreleft > 0) {
+                        helper(s + ")", leftpare_need, moreleft - 1);
+                    }
+                }
+                helper("", n, 0);
+                return result;
+            };
+
+            console.log('generateParenthesis(3): ');
+            console.log(generateParenthesis(3));
+        }());
+
+        /* 
+           iterative 
+           Not finished.
+         */
+        (function() {
+            try {
+                //  Demo: 
+                //  public class Solution
+                //  {
+                //  	public List<String> generateParenthesis(int n)
+                //  	{
+                //  		List<List<String>> lists = new ArrayList<>();
+                //  		lists.add(Collections.singletonList(""));
+
+                //  		for (int i = 1; i <= n; ++i)
+                //  		{
+                //  			final List<String> list = new ArrayList<>();
+
+                //  			for (int j = 0; j < i; ++j)
+                //  			{
+                //  				for (final String first : lists.get(j))
+                //  				{
+                //  					for (final String second : lists.get(i - 1 - j))
+                //  					{
+                //  						list.add("(" + first + ")" + second);
+                //  					}
+                //  				}
+                //  			}
+
+                //  			lists.add(list);
+                //  		}
+
+                //  		return lists.get(lists.size() - 1);
+                //  	}
+                //  }
+                var generateParenthesis = function(n) {
+                    var lists = [];
+                    for (var i = 1; i <= n; ++i) {
+                        var list = [];
+                        for (var j = 0; j < i; ++j) {
+                            for (var first in lists[j]) {
+                                for (var second in lists[i - 1 - j]) {
+                                    list.push("(" + first + ")" + second);
+                                }
+                            }
+                        }
+
+                        lists.push(list);
+                    }
+
+                    return lists;
+                };
+
+                console.log('generateParenthesis(3): ');
+                console.log(generateParenthesis(3));
+            } catch (e) {
+                console.error(e.message);
+            }
+        }());
+</script>
