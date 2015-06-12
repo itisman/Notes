@@ -100,7 +100,8 @@ set backupdir=C:\Gaopeng.Chen\VIMbackup
 set directory=C:\Gaopeng.Chen\VIMbackup
 
 
-
+"markdown
+au BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
 
 
 " -- Syntastic --
