@@ -102,6 +102,13 @@ set directory=C:\Gaopeng.Chen\VIMbackup
 
 "markdown
 au BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
+au BufNewFile,BufFilePre,BufRead *.xsjslib set filetype=javascript
+au BufNewFile,BufFilePre,BufRead *.xsjs set filetype=javasript
+
+"set relative number on insert mode
+"set relativenumber
+"autocmd InsertEnter * :set norelativenumber number
+"autocmd InsertLeave * :set relativenumber
 
 
 " -- Syntastic --
@@ -116,7 +123,7 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_javascript_checkers = ['jshint']
 let g:syntastic_javascript_jshint_exec='C:\Users\I306517\AppData\Roaming\npm\jshint.cmd'
-let g:syntastic_javascript_jshint_args='--config "C:\Gaopeng.Chen\workspace\hana_epm_fpa\config\coding\jshintConfigUI.js"'
+let g:syntastic_javascript_jshint_args='--config "C:\hana_epm_fpa\config\coding\jshintConfigUI.js"'
 
 
 " -- NERDTree config --

@@ -26,6 +26,7 @@
 
 > `gg=G` indent whole file
 
+> `=22G` indent from current line to line 22
 > ----
 
 > `:>` indent on this line
@@ -453,4 +454,14 @@
 > autocmd FileType css vnoremap <buffer> <c-f> :call RangeCSSBeautify()<cr>
 > ```
 
+#### How to count how many lines should be selected?
+----
+> `d22G` delete from current row to line 22
+
+----
+> **Set relative number on startup setting:**
+> "set relative number on insert mode
+> "set relativenumber
+> "autocmd InsertEnter * :set norelativenumber number
+> "autocmd InsertLeave * :set relativenumber
 

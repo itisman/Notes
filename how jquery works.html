@@ -48,6 +48,21 @@
         this.age = age;
     };
 
+    //jQuery constructor: factory pattern
+    function jQueryConstructor() {
+        function Init() {
+            this.name = 'ccc';
+            return this;
+        }
+
+        Init.prototype = jQueryConstructor.prototype;
+        Init.prototype.fn1 = function() {};
+        Init.prototype.fn2 = function() {};
+
+        var kobj = new Init();
+        return kobj;
+    }
+
     var ins1 = new normalConstructor('Jim');
     console.log(window.name);
     var ins2 = normalConstructor('Jim');
@@ -56,6 +71,14 @@
     console.log(window.age);
     var ins4 = betterConstructor('8');
     console.log(window.age);
+
+
+    var a1 = jQueryConstructor();
+    var a2 = new jQueryConstructor();
+
+    console.log(a1 instanceof jQueryConstructor);
+    console.log(a2 instanceof jQueryConstructor);
+    
 
     /*
        myQuery and private init function 
@@ -126,6 +149,29 @@
     	return k;
     })();
 
+    var myQueryOutside = {};
+    (function (){
+        function init(){
+            return this;
+        };
+
+    	myQueryOutside = function (selector, context)
+    	{
+            var kobj = new init();
+    		return kobj;
+    	};
+    
+        myQueryOutside.fn = myQueryOutside.prototype = init.prototype = {};
+    
+        myQueryOutside.fn.fn1 = function(){
+            console.log("fn1");
+        };
+
+        myQueryOutside.fn.fn2 = function(){
+            console.log("fn2");
+        };
+    })();
+
 
     /*
        old jQuery 1.1 version init like this
@@ -160,6 +206,7 @@
 
     var myQueryWithInitIns1 = myQueryWithInit();
     var myQueryWithoutInitIns1 = myQueryWithoutInit();
+    var myQueryOutsideIns1 = myQueryOutside();
 
     //plugin function : plugin will appear in all the entities that already created and those that will be created. Adding properties directly to the object, we implement the static properties.
     myQueryWithInit.fn.fn3 = function(){
@@ -167,6 +214,10 @@
     };
 
     myQueryWithoutInit.fn3 = function(){
+        console.log("fn3");
+    };
+
+    myQueryOutside.fn3 = function(){
         console.log("fn3");
     };
     
