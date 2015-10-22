@@ -111,6 +111,7 @@ au BufNewFile,BufFilePre,BufRead *.xsjs set filetype=javasript
 "autocmd InsertLeave * :set relativenumber
 
 
+
 " -- Syntastic --
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
@@ -166,3 +167,23 @@ function MyDiff()
   silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3 . eq
 endfunction
 
+
+"""""""""""""""""""""""""""""
+"windows in chinese irrecognizable code
+"""""""""""""""""""""""""""""
+set fileencodings=ucs-bom,utf-8,utf-16,gbk,chinese,cp936,gb18030,big5,euc-jp,euc-kr,latin1
+"set encoding=utf-8
+"set termencoding=utf-8
+"if has("win32")
+"set fileencoding=chinese
+"else
+"set fileencoding=utf-8
+"endif
+
+"menu irrecognizable code
+"set langmenu=zh_CN.utf-8
+"source $VIMRUNTIME/delmenu.vim
+"source $VIMRUNTIME/menu.vim
+
+"console output irrecognizable code
+"language messages zh_cn.utf-8
