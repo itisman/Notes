@@ -82,6 +82,20 @@
 ----
 > [Search and Replace](http://vim.wikia.com/wiki/Search\_and\_replace)
 
+####  How to search from cross file
+----
+> 'lcd' : show current directory.
+----
+> `:vimgrep /\CGaopeng/gj *.* : Search from current directory and find from all files. Search keyword is 'Gaopeng' and Case sensitive.
+> `:vimgrep /\CGaopeng/gj *.html : Search from current directory and find from all the .html file. Search keyword is 'Gaopeng' and Case sensitive.
+> `:vimgrep /\CGaopeng/gj **/*.html : Search from current directory and sub-directory, find from all the .html file. Search keyword is 'Gaopeng' and Case sensitive.
+> '\C' : Case sensitive
+> 'g' : search the whole line, not only return the first match.
+> 'j' : do not jump to the first match automatically.
+----
+> ':copen' : open search result list.
+> ':cclose' : close search result list.
+
 ####  How to view as Tab
 ----
 > `:Te`

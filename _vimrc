@@ -172,7 +172,7 @@ endfunction
 "windows in chinese irrecognizable code
 """""""""""""""""""""""""""""
 set fileencodings=ucs-bom,utf-8,utf-16,gbk,chinese,cp936,gb18030,big5,euc-jp,euc-kr,latin1
-"set encoding=utf-8
+set encoding=utf-8
 "set termencoding=utf-8
 "if has("win32")
 "set fileencoding=chinese
