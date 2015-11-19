@@ -84,7 +84,9 @@
 
 ####  How to search from cross file
 ----
-> 'lcd' : show current directory.
+> ':pwd' : show current directory.
+> ':cd %:h' : replaced by the head of the path to the current file.
+
 ----
 > `:vimgrep /\CGaopeng/gj *.* : Search from current directory and find from all files. Search keyword is 'Gaopeng' and Case sensitive.
 > `:vimgrep /\CGaopeng/gj *.html : Search from current directory and find from all the .html file. Search keyword is 'Gaopeng' and Case sensitive.
