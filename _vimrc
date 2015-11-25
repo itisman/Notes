@@ -1,5 +1,4 @@
 filetype off                  " required
-syn on "syntax on
 colorscheme desert "set theme 
 
 
@@ -21,6 +20,7 @@ Plugin 'Syntastic'
 Plugin 'maksimr/vim-jsbeautify'
 Plugin 'einars/js-beautify'
 Plugin 'scrooloose/nerdtree.git'
+Plugin 'digitaltoad/vim-jade'
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
@@ -56,6 +56,8 @@ filetype plugin indent on    " required
 
 
 " -- Common --
+"Move down after the bundles so that syntax rules in Bundle Plugins will be used
+syn on "syntax on
 set ai
 set bs=2
 set showmatch
