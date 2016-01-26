@@ -88,6 +88,8 @@
 > ':cd %:h' : replaced by the head of the path to the current file.
 
 ----
+> `:vimgrep Gaopeng * : Search from current directory and find from all files. Search keyword is 'Gaopeng' and Case sensitive.
+> `:vimgrep Gaopeng ** : Search from current directory and sub directory and find from all files. Search keyword is 'Gaopeng' and Case sensitive.
 > `:vimgrep /\CGaopeng/gj *.* : Search from current directory and find from all files. Search keyword is 'Gaopeng' and Case sensitive.
 > `:vimgrep /\CGaopeng/gj *.html : Search from current directory and find from all the .html file. Search keyword is 'Gaopeng' and Case sensitive.
 > `:vimgrep /\CGaopeng/gj **/*.html : Search from current directory and sub-directory, find from all the .html file. Search keyword is 'Gaopeng' and Case sensitive.
@@ -481,3 +483,7 @@
 > "autocmd InsertEnter * :set norelativenumber number
 > "autocmd InsertLeave * :set relativenumber
 
+#### How to reload start up config without close the vim 
+----
+> `:so %` : You can do this when you editing the config file. % means current file.
+> `:so $MYVIMRC` : In general
