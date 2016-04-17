@@ -28,6 +28,8 @@
         set autoindent shiftwidth=4
         set laststatus=2
         set tabstop=4
+		set incsearch
+		set hlsearch
 		let mapleader=" "	
     " }
 
@@ -129,7 +131,7 @@
         let g:ctrlp_cmd = 'CtrlP'
         let g:ctrlp_working_path_mode = 'ra'
         "set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
-        set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe,*.jar,*.sh  " Windows
+        set wildignore+=*\\webapp\\*,*\\tmp\\*,*.swp,*.zip,*.exe,*.jar,*.sh  " Windows
         "let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
         "let g:ctrlp_custom_ignore = { \ 'dir':  '\v[\/]\.(git|hg|svn)$', \ 'file': '\v\.(exe|so|dll)$', \ 'link': 'some_bad_symbolic_links', \ }
         "let g:ctrlp_user_command = 'find %s -type f'        " MacOSX/Linux
@@ -144,37 +146,68 @@
         let NERDTreeChDirMode=2 "Auto set VIM pwd directory as default when open bookmarks
 		"let no_buffers_menu=1
     " }	
+	
+	" jsbeautify {
+		map <Leader>ff :call JsBeautify()<cr>
+		autocmd FileType javascript noremap <buffer>  <Leader>ff :call JsBeautify()<cr>
+		autocmd FileType json noremap <buffer> <Leader>ff :call JsonBeautify()<cr>
+		autocmd FileType jsx noremap <buffer> <Leader>ff :call JsxBeautify()<cr>
+		autocmd FileType html noremap <buffer> <Leader>ff :call HtmlBeautify()<cr>
+		autocmd FileType css noremap <buffer> <Leader>ff :call CSSBeautify()<cr>
+		
+		autocmd FileType javascript vnoremap <buffer>  <Leader>ff :call RangeJsBeautify()<cr>
+		autocmd FileType json vnoremap <buffer> <Leader>ff :call RangeJsonBeautify()<cr>
+		autocmd FileType jsx vnoremap <buffer> <Leader>ff :call RangeJsxBeautify()<cr>
+		autocmd FileType html vnoremap <buffer> <Leader>ff :call RangeHtmlBeautify()<cr>
+		autocmd FileType css vnoremap <buffer> <Leader>ff :call RangeCSSBeautify()<cr>
+    " }	
 " }
+
 
 " Enviroment {
-	" Chinese {
-		" file display {
-			set fileencodings=utf-8,gbk2312,gbk,gb18030,cp936  
-			set encoding=utf-8  
-			set termencoding=utf-8   
-			set imcmdline    
-		" }
-		  
-		" menu display {
-			set langmenu=zh_CN  
-			let $LANG = 'zh_CN.UTF-8'         
-		" }
-		  
-		" message display {
-			if has("win32")  
-				set termencoding=chinese  
-				language message zh_CN.UTF-8  
-			endif    
-		" }
-	" }
+    " Chinese {
+        " file display {
+            set fileencodings=utf-8,gbk2312,gbk,gb18030,cp936  
+            set encoding=utf-8  
+            set termencoding=utf-8   
+            set imcmdline    
+        " }
+          
+        " menu display {
+            set langmenu=zh_CN  
+            let $LANG = 'zh_CN.UTF-8'         
+        " }
+          
+        " message display {
+            if has("win32")  
+                set termencoding=chinese  
+                language message zh_CN.UTF-8  
+            endif    
+        " }
+    " }
 " }
 
+
 " Hot Key {	
-	map <Leader>t :NERDTreeToggle<CR> 
-	map <Leader>cd :cd %:h<CR> :pwd<CR>
-	map <Leader>eo :copen<CR> 
-	map <Leader>ec :cclose<CR> 
-"}
+    map <Leader>t :NERDTreeToggle<CR>		"Nerdtree
+	
+    map <Leader>dd :cd %:p:h<CR> :pwd<CR>		"Current Dir
+	map <Leader>dw :! explorer .<CR> 		"Explorer
+	
+    map <Leader>cw :copen<CR> 				"Open
+    map <Leader>ccl :ccl<CR>				"Close
+	"map <Leader>cc :cc<CR>					"details
+	"map <Leader>cp :cp<CR>					"Previous
+	"map <Leader>cn :cn<CR>					"Next
+	"map <Leader>cl :cl<CR>					"List all 
+	"map <Leader>col :col<CR>				"Old List
+	"map <Leader>cnew :cnew<CR>				"New List
+	
+	map <Leader>ew :Errors<CR> 				"Error Open
+	map <Leader>ecl :lclose<CR> 			"Error Close
+	map <Leader>en :lnext<CR> 				"Error Next
+	map <Leader>ep :lprev<CR> 				"Error Prev
+" }
 
 
 " Footer {

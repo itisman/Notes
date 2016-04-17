@@ -96,6 +96,9 @@
 > '\C' : Case sensitive
 > 'g' : search the whole line, not only return the first match.
 > 'j' : do not jump to the first match automatically.
+
+> ':grep gaopeng *.md' : search gaopeng from md file and jump to the first match automatically.
+> ':grep! gaopeng *.md' : search gaopeng from md file and do not jump to the first match automatically.
 ----
 > ':copen' : open search result list.
 > ':cclose' : close search result list.
@@ -160,6 +163,8 @@
 
 > `gUw` uppercase current word
 
+> `gUit` uppercase block
+
 
 ####  How to trace back your cursor movment?
 ----
@@ -174,6 +179,8 @@
 > `Fs` find previous "s"
 
 > `3fs`find the third "s"
+
+> `;` repeat the last search that the f command performed and reverse by `,`
 
 ####  How to replace charactor or sentence place?
 ----
@@ -289,6 +296,7 @@
 
 > `V` whole line selector
 
+> `gv` Reselect the last visual selection
 
 ####  How to run shell command?
 ----
@@ -487,3 +495,18 @@
 ----
 > `:so %` : You can do this when you editing the config file. % means current file.
 > `:so $MYVIMRC` : In general
+
+#### How to show hidden files in NERDTree
+----
+> `SHIFT + i`
+
+#### How to move cursor to the bottom line displayed in the current window?
+----
+> `Shift + H`: goto Head of window
+> `Shift + M`: goto Middle of window
+> `Shift + L`: goto Last of window
+
+#### How to paste multiple times?
+----
+> `viwp`: first time select the word need to replace, then paste.
+> `viw"0p`: paste again. select but use "0p to use origin copied word.
