@@ -90,6 +90,8 @@
 		Plugin 'bling/vim-airline' "It can integration with multiple plugin		
 		Plugin 'tpope/vim-fugitive'		        
 		Plugin 'scrooloose/nerdcommenter'
+        Plugin 'pangloss/vim-javascript'
+        Plugin 'mxw/vim-jsx'
 		
 		"Plugin 'nathanaelkane/vim-indent-guides'
 		"Plugin 'terryma/vim-multiple-cursors'
@@ -150,16 +152,18 @@
     " }	
 	
 	" jsbeautify {
-		map <Leader>ff :call JsBeautify()<cr>
+		" map <Leader>ff :call JsBeautify()<cr>
 		autocmd FileType javascript noremap <buffer>  <Leader>ff :call JsBeautify()<cr>
 		autocmd FileType json noremap <buffer> <Leader>ff :call JsonBeautify()<cr>
 		autocmd FileType jsx noremap <buffer> <Leader>ff :call JsxBeautify()<cr>
+		autocmd BufEnter *.jsx noremap <buffer> <Leader>ff :call JsxBeautify()<cr>
 		autocmd FileType html noremap <buffer> <Leader>ff :call HtmlBeautify()<cr>
 		autocmd FileType css noremap <buffer> <Leader>ff :call CSSBeautify()<cr>
 		
 		autocmd FileType javascript vnoremap <buffer>  <Leader>ff :call RangeJsBeautify()<cr>
 		autocmd FileType json vnoremap <buffer> <Leader>ff :call RangeJsonBeautify()<cr>
 		autocmd FileType jsx vnoremap <buffer> <Leader>ff :call RangeJsxBeautify()<cr>
+		autocmd BufEnter *.jsx vnoremap <buffer> <Leader>ff :call RangeJsxBeautify()<cr>
 		autocmd FileType html vnoremap <buffer> <Leader>ff :call RangeHtmlBeautify()<cr>
 		autocmd FileType css vnoremap <buffer> <Leader>ff :call RangeCSSBeautify()<cr>
     " }	
