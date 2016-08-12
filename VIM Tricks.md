@@ -510,3 +510,24 @@
 ----
 > `viwp`: first time select the word need to replace, then paste.
 > `viw"0p`: paste again. select but use "0p to use origin copied word.
+
+#### How to show all the shortkey?
+----
+> `:no`
+> `:map`
+
+#### How to replace all the space to enter?
+----
+> `:1, 4s/\s/\r/g`: replace all the space to enter on line 1 to line 4
+
+
+#### How to use macro in vim?
+----
+Each register is identified by a letter a to z.
+> `qd`:	start recording to register d
+> `...`: your complex series of commands
+> `q`:	stop recording
+> `@d`:	execute your macro
+> `@@`:	execute your macro again
+> `4@d`:	execute your macro 4 times
+
