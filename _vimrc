@@ -57,7 +57,7 @@
         set undodir=$HOME/VIMBackjup		
     " }
 
-    " markdown{
+    " Set file type{
         au BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
         au BufNewFile,BufFilePre,BufRead *.xsjslib set filetype=javascript
         au BufNewFile,BufFilePre,BufRead *.xsjs set filetype=javasript
@@ -65,8 +65,9 @@
 
     " Row Number {
         " set relativenumber {
-            "autocmd InsertEnter * :set norelativenumber number
-            "autocmd InsertLeave * :set relativenumber
+            set relativenumber
+            autocmd InsertEnter * :set norelativenumber number
+            autocmd InsertLeave * :set relativenumber
         " }
     " }
 " }
@@ -92,6 +93,7 @@
 		Plugin 'scrooloose/nerdcommenter'
         Plugin 'pangloss/vim-javascript'
         Plugin 'mxw/vim-jsx'
+        Plugin 'posva/vim-vue'
 		
 		"Plugin 'nathanaelkane/vim-indent-guides'
 		"Plugin 'terryma/vim-multiple-cursors'
@@ -167,6 +169,11 @@
 		autocmd FileType html vnoremap <buffer> <Leader>ff :call RangeHtmlBeautify()<cr>
 		autocmd FileType css vnoremap <buffer> <Leader>ff :call RangeCSSBeautify()<cr>
     " }	
+    
+    " vim-vue {
+        autocmd BufNewFile,BufRead *.vue set ft=vue
+    " }	
+    
 " }
 
 
@@ -195,24 +202,50 @@
 
 
 " Hot Key {	
-    map <Leader>t :NERDTreeToggle<CR>		"Nerdtree
+    "Nerdtree
+    map <Leader>t :NERDTreeToggle<CR>
+
+    "Current Dir
+    map <Leader>dd :cd %:p:h<CR> :pwd<CR>
+
+  	"Explorer
+    map <Leader>dw :!start explorer .<CR> 
+    
+    "Open
+    map <Leader>cw :copen<CR>
+
+    "Close
+    map <Leader>ccl :ccl<CR>
+
+    "details
+	"map <Leader>cc :cc<CR>
+    
+    "Previous
+	"map <Leader>cp :cp<CR>
+    
+    "Next
+	"map <Leader>cn :cn<CR>
+
+    "List all 
+	"map <Leader>cl :cl<CR>
+
+    "Old List
+	"map <Leader>col :col<CR>
+
+    "New List
+	"map <Leader>cnew :cnew<CR>
 	
-    map <Leader>dd :cd %:p:h<CR> :pwd<CR>		"Current Dir
-	map <Leader>dw :! explorer .<CR> 		"Explorer
-	
-    map <Leader>cw :copen<CR> 				"Open
-    map <Leader>ccl :ccl<CR>				"Close
-	"map <Leader>cc :cc<CR>					"details
-	"map <Leader>cp :cp<CR>					"Previous
-	"map <Leader>cn :cn<CR>					"Next
-	"map <Leader>cl :cl<CR>					"List all 
-	"map <Leader>col :col<CR>				"Old List
-	"map <Leader>cnew :cnew<CR>				"New List
-	
-	map <Leader>ew :Errors<CR> 				"Error Open
-	map <Leader>ecl :lclose<CR> 			"Error Close
-	map <Leader>en :lnext<CR> 				"Error Next
-	map <Leader>ep :lprev<CR> 				"Error Prev
+    "Error Open
+	map <Leader>ew :Errors<CR>
+
+    "Error Close
+	map <Leader>ecl :lclose<CR>
+
+    "Error Next
+	map <Leader>en :lnext<CR>
+
+    "Error Prev
+	map <Leader>ep :lprev<CR>
 " }
 
 

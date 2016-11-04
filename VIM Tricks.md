@@ -529,5 +529,5 @@ Each register is identified by a letter a to z.
 > `q`:	stop recording
 > `@d`:	execute your macro
 > `@@`:	execute your macro again
-> `4@d`:	execute your macro 4 times
+> `4@d`: execute your macro 4 times
 
