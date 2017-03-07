@@ -30,6 +30,7 @@
         set tabstop=4
 		set incsearch
 		set hlsearch
+        set backupcopy=yes
 		let mapleader=" "	
     " }
 
