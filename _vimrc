@@ -89,7 +89,7 @@
         Plugin 'digitaltoad/vim-jade'
         Plugin 'kien/ctrlp.vim'
         Plugin 'mattn/emmet-vim'        		
-		Plugin 'bling/vim-airline' "It can integration with multiple plugin		
+		Plugin 'vim-airline/vim-airline'
 		Plugin 'tpope/vim-fugitive'		        
 		Plugin 'scrooloose/nerdcommenter'
         Plugin 'pangloss/vim-javascript'
@@ -127,12 +127,23 @@
         let g:syntastic_enable_signs = 1
         let g:syntastic_check_on_wq = 1
         let g:syntastic_auto_jump = 3
-		let g:syntastic_javascript_jshint_args = '--config "F:\CGP\Workspace\GITHUB\Notes\.jshintrc"'
+        let g:syntastic_javascript_jshint_args = '--config "F:\CGP\Workspace\GITHUB\Notes\.jshintrc"'
         let g:syntastic_javascript_checkers = ['jshint']
+        "let g:syntastic_javascript_jshint_exec='jsx-jshint-wrapper'   "need this only if jshint do not installed in global
         "let g:syntastic_javascript_jshint_exec='C:\Users\Administrator\AppData\Roaming\npm\jshint.cmd'   "need this only if jshint do not installed in global
-        
+        "let g:syntastic_javascript_checkers = ['eslint']
     " }
     
+    " Airline {
+        let g:airline#extensions#tabline#enabled = 1 
+        let g:airline#extensions#tabline#show_splits = 1
+        let g:airline#extensions#tabline#tab_nr_type = 1
+        let g:airline#extensions#tabline#show_buffers = 1
+        let g:airline#extensions#tabline#show_tabs = 0
+        "let g:airline_section_b='%{strftime("%c")}'
+        "let g:airline_section_y='BN: %{bufnr("%")}'
+    " }
+    "
     " CtrlP {
         let g:ctrlp_map = '<c-p>'
         let g:ctrlp_cmd = 'CtrlP'
@@ -175,6 +186,9 @@
         autocmd BufNewFile,BufRead *.vue set ft=vue
     " }	
     
+    " vim-jsx {
+        let g:jsx_ext_required = 0 " Allow JSX in normal JS files
+    " }	
 " }
 
 
@@ -247,6 +261,9 @@
 
     "Error Prev
 	map <Leader>ep :lprev<CR>
+
+    map gb :bn<CR>
+    map gB :bp<CR>
 " }
 
 
