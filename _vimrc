@@ -85,7 +85,8 @@
         Plugin 'Syntastic' "need to install jshint (npm install -g jshint)
         Plugin 'maksimr/vim-jsbeautify'
         Plugin 'einars/js-beautify'
-        Plugin 'scrooloose/nerdtree.git'
+        Plugin 'scrooloose/nerdtree'
+        Plugin 'Xuyuanp/nerdtree-git-plugin'
         Plugin 'digitaltoad/vim-jade'
         Plugin 'kien/ctrlp.vim'
         Plugin 'mattn/emmet-vim'        		
@@ -93,8 +94,9 @@
 		Plugin 'tpope/vim-fugitive'		        
 		Plugin 'scrooloose/nerdcommenter'
         Plugin 'pangloss/vim-javascript'
-        Plugin 'mxw/vim-jsx'
+        "Plugin 'mxw/vim-jsx'
         Plugin 'posva/vim-vue'
+        Plugin 'airblade/vim-gitgutter'
 		
 		"Plugin 'nathanaelkane/vim-indent-guides'
 		"Plugin 'terryma/vim-multiple-cursors'
@@ -135,11 +137,11 @@
     " }
     
     " Airline {
-        let g:airline#extensions#tabline#enabled = 1 
-        let g:airline#extensions#tabline#show_splits = 1
-        let g:airline#extensions#tabline#tab_nr_type = 1
-        let g:airline#extensions#tabline#show_buffers = 1
-        let g:airline#extensions#tabline#show_tabs = 0
+        "let g:airline#extensions#tabline#enabled = 1 
+        "let g:airline#extensions#tabline#show_splits = 1
+        "let g:airline#extensions#tabline#tab_nr_type = 1
+        "let g:airline#extensions#tabline#show_buffers = 1
+        "let g:airline#extensions#tabline#show_tabs = 0
         "let g:airline_section_b='%{strftime("%c")}'
         "let g:airline_section_y='BN: %{bufnr("%")}'
     " }
@@ -164,6 +166,21 @@
         let NERDTreeChDirMode=2 "Auto set VIM pwd directory as default when open bookmarks
 		"let no_buffers_menu=1
     " }	
+ 
+    " NERDTree-git {
+        let g:NERDTreeIndicatorMapCustom = {
+        \ "Dirty"     : "*",
+        \ "Modified"  : "~",
+        \ "Staged"    : "=",
+        \ "Deleted"   : "-",
+        \ "Untracked" : "+",
+        \ "Renamed"   : "ren",
+        \ "Unmerged"  : "unmerg",
+        \ "Clean"     : "",
+        \ 'Ignored'   : "igr",
+        \ "Unknown"   : "?"
+        \ }
+    " }	
 	
 	" jsbeautify {
 		" map <Leader>ff :call JsBeautify()<cr>
@@ -187,7 +204,7 @@
     " }	
     
     " vim-jsx {
-        let g:jsx_ext_required = 0 " Allow JSX in normal JS files
+        "let g:jsx_ext_required = 0 " Allow JSX in normal JS files
     " }	
 " }
 
