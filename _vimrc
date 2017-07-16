@@ -1,4 +1,9 @@
-" Add following config in vim to point the configration source to this file: source /path/here
+" 1. 在vim安装目录下的配置文件如下内容，用于指向一个新的配置文件： source /path/here
+" 2. 打开Vundle的github，clone Vundle 并根据提示做相应的配置： set rtp+=~/.vim/bundle/Vundle.vim/
+" 3. 使用PluginInstall安装VIM插件
+" 4. 确保已经安装了NODEJS
+" 5. 根据配置文件，需要确保$HOME/VIMBackup文件夹存在
+" 6. 查看配置文件中的绝对路径，进行相应修改
 
 
 " General {
@@ -20,7 +25,7 @@
         set hls
         set ruler "Display cursor coordinate at the right-bottom corner
         set ambiwidth=double
-        set guifont=Consolas
+        set guifont=Consolas:h10
         set history=100
         set softtabstop=4
         set smartindent
@@ -55,7 +60,7 @@
         set backup		
         set backupdir=$HOME/VIMBackup
         set directory=$HOME/VIMBackup
-        set undodir=$HOME/VIMBackjup		
+        set undodir=$HOME/VIMBackup		
     " }
 
     " Set file type{
@@ -75,8 +80,10 @@
 
 
 " Vundle {
-    set rtp+=~/vimfiles/bundle/Vundle.vim/  "set the runtime path to include Vundle and initialize
-    let path='~/vimfiles/bundle'    " alternatively, pass a path where Vundle should install plugins
+	set rtp+=~/.vim/bundle/Vundle.vim/  "set the runtime path to include Vundle and initialize
+    let path='~/.vim/bundle'    " alternatively, pass a path where Vundle should install plugi
+    "set rtp+=~/vimfiles/bundle/Vundle.vim/  "set the runtime path to include Vundle and initialize
+    "let path='~/vimfiles/bundle'    " alternatively, pass a path where Vundle should install plugins
 
     " Plugin {
         call vundle#begin(path) "call vundle#begin('~/some/path/here')
@@ -95,6 +102,7 @@
 		Plugin 'scrooloose/nerdcommenter'
         Plugin 'pangloss/vim-javascript'
         "Plugin 'mxw/vim-jsx'
+        "Plugin 'maxmellon/vim-jsx-pretty'
         Plugin 'posva/vim-vue'
         Plugin 'airblade/vim-gitgutter'
 		
@@ -129,7 +137,7 @@
         let g:syntastic_enable_signs = 1
         let g:syntastic_check_on_wq = 1
         let g:syntastic_auto_jump = 3
-        let g:syntastic_javascript_jshint_args = '--config "F:\CGP\Workspace\GITHUB\Notes\.jshintrc"'
+		let g:syntastic_javascript_jshint_args = '--config "D:\WORKSPACE\GITHUB\Notes\.jshintrc"'
         let g:syntastic_javascript_checkers = ['jshint']
         "let g:syntastic_javascript_jshint_exec='jsx-jshint-wrapper'   "need this only if jshint do not installed in global
         "let g:syntastic_javascript_jshint_exec='C:\Users\Administrator\AppData\Roaming\npm\jshint.cmd'   "need this only if jshint do not installed in global
@@ -205,6 +213,7 @@
     
     " vim-jsx {
         "let g:jsx_ext_required = 0 " Allow JSX in normal JS files
+        "let g:xml_syntax_folding = 1
     " }	
 " }
 
