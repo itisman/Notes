@@ -10,7 +10,11 @@
     " Basic {
         set nocompatible
         filetype off " required
+        set t_Co=256
+        set background=dark
         colorscheme desert "set theme 
+        highlight Normal ctermbg=NONE
+        highlight nonText ctermbg=NONE
         syn on "syntax on
         set ai
         set bs=2
@@ -58,9 +62,9 @@
 
     " Backup {
         set backup		
-        set backupdir=$HOME/VIMBackup
-        set directory=$HOME/VIMBackup
-        set undodir=$HOME/VIMBackup		
+        set backupdir=~/.vimbackup
+        set directory=~/.vimbackup
+        set undodir=~/.vimbackup
     " }
 
     " Set file type{
@@ -76,6 +80,7 @@
             autocmd InsertLeave * :set relativenumber
         " }
     " }
+
 " }
 
 
@@ -90,8 +95,10 @@
 
         Plugin 'gmarik/Vundle.vim'  " let Vundle manage Vundle
         Plugin 'Syntastic' "need to install jshint (npm install -g jshint)
-        Plugin 'maksimr/vim-jsbeautify'
         Plugin 'einars/js-beautify'
+        Plugin 'maksimr/vim-jsbeautify'
+        Plugin 'editorconfig/editorconfig-vim'
+        "Plugin 'Chiel92/vim-autoformat'
         Plugin 'scrooloose/nerdtree'
         Plugin 'Xuyuanp/nerdtree-git-plugin'
         Plugin 'digitaltoad/vim-jade'
@@ -105,16 +112,15 @@
         "Plugin 'maxmellon/vim-jsx-pretty'
         Plugin 'posva/vim-vue'
         Plugin 'airblade/vim-gitgutter'
+        Plugin 'mileszs/ack.vim'
+        Plugin 'rking/ag.vim'
 		
 		"Plugin 'nathanaelkane/vim-indent-guides'
 		"Plugin 'terryma/vim-multiple-cursors'
 		"Plugin 'ervandew/supertab'
-		"Plugin 'ggreer/the_silver_searcher'
         "Plugin 'petdance/ack2'
         "Plugin 'majutsushi/tagbar' "need ctags5.5        
         "Plugin 'Valloric/YouCompleteMe' "Need multiple front plugin        
-        "Plugin 'ggreer/the_silver_searcher'
-        "Plugin 'rking/ag.vim'  "replaced by ack2
         "Plugin 'L9'
         
         " All of your Plugins must be added before the following line
@@ -137,8 +143,9 @@
         let g:syntastic_enable_signs = 1
         let g:syntastic_check_on_wq = 1
         let g:syntastic_auto_jump = 3
-		let g:syntastic_javascript_jshint_args = '--config "D:\WORKSPACE\GITHUB\Notes\.jshintrc"'
+		let g:syntastic_javascript_jshint_args = '--config "/Users/gaopeng/Desktop/WorkSpace/mine/Notes/.jshintrc"'
         let g:syntastic_javascript_checkers = ['jshint']
+        let syntastic_mode_map = { 'passive_filetypes': ['html'] }
         "let g:syntastic_javascript_jshint_exec='jsx-jshint-wrapper'   "need this only if jshint do not installed in global
         "let g:syntastic_javascript_jshint_exec='C:\Users\Administrator\AppData\Roaming\npm\jshint.cmd'   "need this only if jshint do not installed in global
         "let g:syntastic_javascript_checkers = ['eslint']
@@ -153,7 +160,7 @@
         "let g:airline_section_b='%{strftime("%c")}'
         "let g:airline_section_y='BN: %{bufnr("%")}'
     " }
-    "
+
     " CtrlP {
         let g:ctrlp_map = '<c-p>'
         let g:ctrlp_cmd = 'CtrlP'
@@ -164,6 +171,12 @@
         "let g:ctrlp_custom_ignore = { \ 'dir':  '\v[\/]\.(git|hg|svn)$', \ 'file': '\v\.(exe|so|dll)$', \ 'link': 'some_bad_symbolic_links', \ }
         "let g:ctrlp_user_command = 'find %s -type f'        " MacOSX/Linux
         "let g:ctrlp_user_command = 'dir %s /-n /b /s /a-d'  " Windows
+    " }
+
+    " Ack/Ag {
+        "cnoreabbrev Ack Ack!
+        "cnoreabbrev Ag Ag!
+        nnoremap <Leader>a :Ag!<Space>
     " }
  
     " NERDTree {
@@ -191,7 +204,9 @@
     " }	
 	
 	" jsbeautify {
-		" map <Leader>ff :call JsBeautify()<cr>
+        "au BufWrite * :Autoformat
+
+		map <Leader>ff :call JsBeautify()<cr>
 		autocmd FileType javascript noremap <buffer>  <Leader>ff :call JsBeautify()<cr>
 		autocmd FileType json noremap <buffer> <Leader>ff :call JsonBeautify()<cr>
 		autocmd FileType jsx noremap <buffer> <Leader>ff :call JsxBeautify()<cr>
