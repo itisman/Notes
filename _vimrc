@@ -4,7 +4,7 @@
 " 4. 确保已经安装了NODEJS
 " 5. 根据配置文件，需要确保$HOME/VIMBackup文件夹存在
 " 6. 查看配置文件中的绝对路径，进行相应修改
-
+" 7. 查看其它配置文件。如：~/.editorconfig
 
 " General {
     " Basic {
@@ -17,6 +17,8 @@
         highlight nonText ctermbg=NONE
         syn on "syntax on
         set ai
+        set mouse+=a
+        set clipboard=unnamed
         set bs=2
         set showmatch
         set expandtab
@@ -265,7 +267,8 @@
     map <Leader>dd :cd %:p:h<CR> :pwd<CR>
 
   	"Explorer
-    map <Leader>dw :!start explorer .<CR> 
+    "map <Leader>dw :!start explorer .<CR> 
+    map <Leader>dw :!open .<CR> 
     
     "Open
     map <Leader>cw :copen<CR>

@@ -82,7 +82,7 @@
 ----
 > [Search and Replace](http://vim.wikia.com/wiki/Search\_and\_replace)
 
-####  How to search from cross file
+####  How to search from cross file by vimgrep
 ----
 > ':pwd' : show current directory.
 > ':cd %:h' : replaced by the head of the path to the current file.
@@ -531,3 +531,38 @@ Each register is identified by a letter a to z.
 > `@@`:	execute your macro again
 > `4@d`: execute your macro 4 times
 
+#### How to use Ag to search?
+----
+> `:ag DHH`: DHH in CWD
+> `:ag ^ba(r|z)$`: Find files whose contents match a regular expression
+> `:ag -w .DHH`: DHH as single word n CWD
+> `:ag -i -o FOO`: Find files containing "FOO" case-insensitively, and print only the match, rather than the whole line:
+> `:ag DHH -l`: list all the files has DHH in CWD
+> `:ag DHH -l -i`: list all the files has DHH(case insensitively) in CWD
+> `:ag DHH -l -i -G`: list all the files has DHH(case insensitively) in filename in CWD
+> `:ag readme$`: end of readme in CWD
+> `:ag DHH guide/`: DHH in CWD/guide
+> `:ag -g foo`: Find files with a name matching "foo"
+> `:ag foo -G bar`: Find "foo" in files with a name matching "bar"
+> `ag --html needle`: Searches for 'needle' in files with suffix .htm, .html, .shtml or .xhtml.
+> `:ag readme -l --ignore-dir=railties/lib --ignore-dir=guides/code`: list all files has readme in CWD except railties/lib and guides/code
+> `:ag readme -l --ignore-dir="*.rb"`: list all files has readme in CWD but do not searh .rb file
+> `:ag readme -l --skip-vcs-ignores`: list all files has readme in CWD but ignore vcs file. e.g. .gitignore .hgignore
+
+ignore files can be set in .agignore file.
+moreinfo please ref: [ag]{https://www.mankier.com/1/ag}
+
+#### How to copy & yank in vim and clipboard?
+----
+First, The VIM must enable clipboard. use `vim --version` check if it has `+clipboard` tag.
+By default. on OSX it would not enable clipboard. use `brew install vim` to install the vim which enabled clipboard. check if brew installed vim instead of system default one by `which vim`
+if not,
+1. `echo $PATH` or `printenv` to see if `/usr/local/bin` is in front of `/usr/bin`.
+2. update `.bashrc` and `.bash_profile` files to set alias and set default editor to brew installed vim. [run brew vim instead of system default](https://vi.stackexchange.com/questions/11058/how-do-i-run-homebrew-vi-on-macos-instead-of-the-older-version-apple-provided)  
+3. restart
+
+then we can use `"*` to access clipboard
+> `"*yy`: copy current line to clipboard;	
+> `"*p`: paste clipboard here;	
+
+further more, we can [Setting up Vim to yank to clipboard on Mac OS X](http://www.markcampbell.me/2016/04/12/setting-up-yank-to-clipboard-on-a-mac-with-vim.html)
